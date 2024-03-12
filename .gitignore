@@ -1,2 +1,5 @@
-/articles.db
-/signalmedia-1m.jsonl
+Data
+signalmedia
+amazonreviews_exploratory.ipynb
+.ipynb_checkpoints
+.DS_store
