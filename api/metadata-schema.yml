@@ -1,0 +1,26 @@
+Metadata:
+  type: object
+  properties:
+    _id:
+      bsonType: objectId
+    brand:
+      bsonType: string
+    category:
+      bsonType: array
+      items:
+        bsonType: string
+    main_cat:
+      bsonType: string
+    price:
+      bsonType: string
+    rank:
+      bsonType: array
+      items:
+        bsonType: string
+    salesRank:
+      bsonType: object
+      properties: {}
+    title:
+      bsonType: string
+  required:
+    - _id
