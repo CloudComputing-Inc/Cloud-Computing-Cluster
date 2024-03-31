@@ -1,48 +1,72 @@
+# See Setup before running
+# Metadata from https://cseweb.ucsd.edu/~jmcauley/datasets/amazon_v2/
 import json
 import gzip
+import certifi
 from pymongo import MongoClient
 from concurrent.futures import ThreadPoolExecutor, as_completed
-import queue
-import random
+
+# connect to MongoDB, change the user and passwordX  to reflect your own clusters  connection strings
+user = "br"
+password0 = "e3wmnqdtsYSEwa3I"
+up1 = user + ":" + password0
+
+password2 = "C7Kv49l3cZcS5NDo"
+up1 = user + ":" + password2
+
+password3 = "qVEqmdKYmrZoNlFw"
+up1 = user + ":" + password3
+
+password4 = "B0yEjiRW3P71vCkQ"
+up1 = user + ":" + password4 
 
 # MongoDB clusters connection strings
 clusters = {
-    "cluster1": "mongodb+srv://br:e3wmnqdtsYSEwa3I@cluster0.lgxmbkq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-    "cluster2": "mongodb+srv://br:C7Kv49l3cZcS5NDo@cluster0.edx1by0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-    "cluster3": "mongodb+srv://br:qVEqmdKYmrZoNlFw@cluster0.dfxji2z.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-    "cluster4":"mongodb+srv://br:B0yEjiRW3P71vCkQ@cluster0.0ecyl89.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    "cluster1": "mongodb+srv://" + user + ":"+ password0 +"@cluster0.0zctiyc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    "cluster2": "mongodb+srv://" + user + ":"+ password2 + "@cluster0.ica6ojz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    # "cluster3": "mongodb+srv://" + user + ":"+ password3 + "@cluster0.hv5qtwc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    # "cluster4":"mongodb+srv://" + user + ":"+ password4 + "@cluster0.cymhfm5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 }
 
-# Mapping of category files to clusters and document limits
+# Mapping of category files to clusters and document limits(small values for fast app dev small GCP storage limit)
 category_tasks = {
     "cluster1": [
-        ("data/meta_Automotive.json.gz", 3000),
-        ("data/meta_All_Beauty.json.gz", 2000),
-        ("data/meta_AMAZON_FASHION.json.gz", 1500),
-        ("data/meta_Arts_Crafts_and_Sewing.json.gz", 2000),
+        ("../data/meta_Automotive.json.gz", 3000),
+  
+    #    ("..data/meta_All_Beauty.json.gz", 2000),
+    #     ("..data/meta_AMAZON_FASHION.json.gz", 1500),
+    #     ("..data/meta_Arts_Crafts_and_Sewing.json.gz", 2000), 
+
     ],
     "cluster2": [
-        ("data/meta_Books.json.gz", 3000),
-        ("data/meta_CDs_and_Vinyl.json.gz", 1500),
-        ("data/meta_Cell_Phones_and_Accessories.json.gz", 1500),
-        ("data/meta_Clothing_Shoes_and_Jewelry.json.gz", 2000),
-        ("data/meta_Digital_Music.json.gz", 1500),
+        ("../data/meta_Books.json.gz", 3000),
+        
+        # ("../data/meta_CDs_and_Vinyl.json.gz", 1500),
+        # ("../data/meta_Cell_Phones_and_Accessories.json.gz", 1500),
+        # ("../data/meta_Clothing_Shoes_and_Jewelry.json.gz", 2000),
+        # ("../data/meta_Digital_Music.json.gz", 1500), 
+
     ],
-    # Add mappings for clusters 3 and 4 based on your specifications
-    "cluster3": [
-        ("data/meta_Electronics.json.gz", 3000),
-        ("data/meta_Home_and_Kitchen.json.gz", 1500),
-        ("data/meta_Movies_and_TV.json.gz", 1500),
-        ("data/meta_Patio_Lawn_and_Garden.json.gz", 1500),
-        ("data/meta_Pet_Supplies.json.gz", 1500),
-    ],
-    "cluster4": [
-        ("data/meta_Sports_and_Outdoors.json.gz", 3000),
-        ("data/meta_Software.json.gz", 1500),
-        ("data/meta_Tools_and_Home_Improvement.json.gz", 1500),
-        ("data/meta_Toys_and_Games.json.gz", 1500),
-        ("data/meta_Video_Games.json.gz", 1500),
-    ]
+    
+    # "cluster3": [
+    #     ("../data/meta_Electronics.json.gz", 3000),
+    #     ("../data/meta_Home_and_Kitchen.json.gz", 1500),
+        
+    #     ("../data/meta_Movies_and_TV.json.gz", 1500),
+    #     ("../data/meta_Patio_Lawn_and_Garden.json.gz", 1500),
+    #     ("../data/meta_Pet_Supplies.json.gz", 1500),  
+
+
+    # ],
+    # "cluster4": [
+    #     ("../data/meta_Automotive.json.gzdata/meta_Sports_and_Outdoors.json.gz", 3000),
+       
+    #     ("../data/meta_Automotive.json.gzdata/meta_Software.json.gz", 1500),
+    #     ("../data/meta_Automotive.json.gzdata/meta_Tools_and_Home_Improvement.json.gz", 1500),
+    #     ("../data/meta_Automotive.json.gzdata/meta_Toys_and_Games.json.gz", 1500),
+    #     ("../data/meta_Automotive.json.gzdata/meta_Video_Games.json.gz", 1500), 
+    # ]
+
 }
 
 def process_entry(entry):
@@ -60,7 +84,7 @@ def process_entry(entry):
 
 def upload_document_to_cluster(document, cluster_uri):
     """Upload a single document to the specified MongoDB cluster."""
-    client = MongoClient(cluster_uri)
+    client = MongoClient(cluster_uri, ssl=True, ssl_ca_certs=certifi.where())
     db = client['amazon_metadata']
     collection = db['metadata']
     processed_document = process_entry(document)
@@ -98,7 +122,7 @@ def main():
         futures = []
         for cluster_name, tasks in category_tasks.items():
             cluster_uri = clusters[cluster_name]
-            # Here you simply pass the tasks, which already include the document limit
+            # Passing the tasks, which already include the document limit
             futures.append(executor.submit(process_and_upload_documents, cluster_uri, tasks))
         for future in futures:
             future.result()
