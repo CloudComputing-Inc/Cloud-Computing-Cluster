@@ -123,4 +123,4 @@ components:
         categories:
           type: array
           items:
-            type: string  
+            type: string          
