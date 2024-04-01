@@ -91,22 +91,49 @@ def get_metadata():
 
     return jsonify(response)
 
+
+
 @metadata_bp.route('/categories', methods=['GET'])
 def get_main_categories():
-    client = MongoClient(clusters["Books"], tlsCAFile=certifi.where())  # Example using "Books" cluster
-    db = client['amazon_metadata']
-    collection = db['metadata']
+    main_categories = set()  # Use a set to avoid duplicates
 
-    # MongoDB aggregation to get unique categories
-    categories = collection.aggregate([
-        {"$unwind": "$category"},
-        {"$group": {"_id": None, "main_cats": {"$addToSet": "$main_cat"}}},
-        {"$project": {"_id": 0, "main_cats": 1}}
-    ])
-    categories_list = list(categories)
-    if categories_list:
-        return jsonify({"main_categories": categories_list[0]['main_cats']})
-    return jsonify({"main_categories": []})
+    for cluster_connection_string in clusters.values():
+        client = MongoClient(cluster_connection_string, tlsCAFile=certifi.where())
+        db = client['amazon_metadata']
+        collection = db['metadata']
+
+        # Modified pipeline to account for the 'category' field and filter out nulls
+        pipeline = [
+            {
+                "$project": {
+                    "main_cat_adjusted": {
+                        "$cond": {
+                            "if": {"$or": [
+                                {"$and": [
+                                    {"$isArray": "$category"},
+                                    {"$ne": [{"$arrayElemAt": ["$category", 0]}, "$main_cat"]}
+                                ]},
+                                {"$and": [
+                                    {"$not": {"$isArray": "$category"}},
+                                    {"$ne": ["$category", "$main_cat"]}
+                                ]}
+                            ]},
+                            "then": {"$cond": {"if": {"$isArray": "$category"}, "then": {"$arrayElemAt": ["$category", 0]}, "else": "$category"}},
+                            "else": "$main_cat"
+                        }
+                    }
+                }
+            },
+            {"$match": {"main_cat_adjusted": {"$ne": None}}},  # Filter out documents where main_cat_adjusted is null
+            {"$group": {"_id": "$main_cat_adjusted"}}
+        ]
+
+        categories = collection.aggregate(pipeline)
+        for category in categories:
+            main_categories.add(category["_id"])
+
+    return jsonify({"main_categories": list(main_categories)})
+
 
 @metadata_bp.route('/top-products', methods=['GET'])
 def get_top_products():
@@ -130,20 +157,38 @@ def get_top_products():
 @metadata_bp.route('/top-brand', methods=['GET'])
 def get_top_brand():
     category = request.args.get('category')
-    client = MongoClient(get_cluster_connection_string(category), tlsCAFile=certifi.where())
+    cluster_connection_string = get_cluster_connection_string(category)
+    if not cluster_connection_string:
+        return jsonify({"error": "Category not found or not supported."}), 404
+
+    client = MongoClient(cluster_connection_string, tlsCAFile=certifi.where())
     db = client['amazon_metadata']
     collection = db['metadata']
 
-    # MongoDB aggregation to find the brand with the most products
+    # Adjusted MongoDB aggregation to find the brand with the most products, ensuring the brand is not null or empty
     top_brand = collection.aggregate([
-        {"$match": {"main_cat": category}},
-        {"$group": {"_id": "$brand", "count": {"$sum": 1}}},
+        {
+            "$match": {
+                "main_cat": category,
+                "brand": {"$exists": True, "$ne": ""}
+            }
+        },
+        {
+            "$group": {
+                "_id": "$brand",
+                "count": {"$sum": 1}
+            }
+        },
         {"$sort": {"count": -1}},
         {"$limit": 1}
     ])
     top_brand_list = list(top_brand)
-    if top_brand_list:
+    if top_brand_list and top_brand_list[0]['_id']:
         return jsonify({"top_brand": top_brand_list[0]['_id'], "count": top_brand_list[0]['count']})
     return jsonify({"error": "No data found for the category."})
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 
