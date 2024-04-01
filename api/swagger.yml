@@ -47,3 +47,80 @@ paths:
           description: Bad request. Invalid parameters provided.
         '404':
           description: No matching metadata found.
+  /categories:
+    get:
+      summary: Retrieve main categories
+      responses:
+        '200':
+          description: A list of main categories available.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  main_categories:
+                    type: array
+                    items:
+                      type: string
+
+  /top-products:
+    get:
+      summary: Retrieve top ranking products in a category
+      parameters:
+        - in: query
+          name: category
+          required: true
+          schema:
+            type: string
+          description: The category to retrieve top products from.
+      responses:
+        '200':
+          description: A list of top ranking products in the specified category.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+
+  /top-brand:
+    get:
+      summary: Retrieve the top brand in a category
+      parameters:
+        - in: query
+          name: category
+          required: true
+          schema:
+            type: string
+          description: The category to retrieve the top brand from.
+      responses:
+        '200':
+          description: The top brand in the specified category and the count of products.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  top_brand:
+                    type: string
+                  count:
+                    type: integer
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+        brand:
+          type: string
+        price:
+          type: number
+          format: float
+        rank:
+          type: integer
+        categories:
+          type: array
+          items:
+            type: string  
