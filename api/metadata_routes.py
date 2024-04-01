@@ -18,7 +18,7 @@ up4 = user + ":" + password4
 
 #  cluster connection strings 
 clusters = {
-    "Automotive": "mongodb+srv://" + up0 +"@cluster0.0zctiyc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    # "Automotive": "mongodb+srv://" + up0 +"@cluster0.0zctiyc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
     "Books": "mongodb+srv://" + up2 +"@cluster0.ica6ojz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
     # TO DO THE REST
 }

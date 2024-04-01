@@ -24,7 +24,7 @@ up4 = user + ":" + password4
 
 # MongoDB clusters connection strings
 clusters = {
-    "cluster1": "mongodb+srv://" + up0 +"@cluster0.0zctiyc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    # "cluster1": "mongodb+srv://" + up0 +"@cluster0.0zctiyc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
     "cluster2": "mongodb+srv://" + up2 +"@cluster0.ica6ojz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
     # "cluster3": "mongodb+srv://" + up3 + "@cluster0.hv5qtwc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
     # "cluster4":"mongodb+srv://" + up4 + "@cluster0.cymhfm5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
@@ -32,16 +32,16 @@ clusters = {
 
 # Mapping of category files to clusters and document limits(small values for fast app dev small GCP storage limit)
 category_tasks = {
-    "cluster1": [
-        ("../../data/meta_Automotive.json.gz", 3000),
+    # "cluster1": [
+    #     ("meta_Automotive.json.gz", 3000),
   
     #    ("../../data/meta_All_Beauty.json.gz", 2000),
     #     ("../../data/meta_AMAZON_FASHION.json.gz", 1500),
     #     ("../../data/meta_Arts_Crafts_and_Sewing.json.gz", 2000), 
 
-    ],
+    # ],
     "cluster2": [
-        ("../../data/meta_Books.json.gz", 3000),
+        ("./meta_Books.json.gz", 3000),
         
         # ("../../data/meta_CDs_and_Vinyl.json.gz", 1500),
         # ("../../data/meta_Cell_Phones_and_Accessories.json.gz", 1500),

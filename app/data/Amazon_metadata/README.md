@@ -7,5 +7,5 @@
 5. You can test fast if you are connected to a cluster by running test.py class.
 
 # Running
-$ cd cn-group03/app/microservices/market-performance
+$ cd cn-group03/app/data/Amazon-metadata
 $ python metadata_clusters.py

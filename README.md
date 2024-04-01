@@ -10,7 +10,8 @@
 4. For each cluster : Add that IP in Security > Network Access > Add IP Address 
 5. You can test fast if you are connected to a cluster by running test.py class.
 
-# Running
-$ cd cn-group03/app/microservices/market-performance
+# Running (provisory)
+$ cd app/data/Amazon_metadata
 $ python metadata_clusters.py
+$ cd /app/
 $ python app.py
