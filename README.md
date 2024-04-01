@@ -13,5 +13,5 @@
 # Running (provisory)
 $ cd app/data/Amazon_metadata
 $ python metadata_clusters.py
-$ cd /app/
+$ cd ~/cn-group03
 $ python app.py
