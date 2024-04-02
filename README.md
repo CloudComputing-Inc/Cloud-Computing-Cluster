@@ -6,9 +6,7 @@
 # Running (external communication)
 $ chmod +x ~/cn-group03/scripts/run.sh
 
-$ cd ~/cn-group03/scripts
-
-$ ./run.sh
+$ ./scripts/run.sh
 
 # Running (internal communication)
 ## Market Performance Service with GRPC example:

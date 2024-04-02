@@ -5,6 +5,10 @@ printf "Building Docker for API Gateway . . .\n"
 docker build -f ~/cn-group03/api/Dockerfile -t api_gateway ~/cn-group03/api/
 printf "done\n"
 
+### Clean Docker
+chmod +x ~/cn-group03/scripts/docker_clean.sh
+./docker_clean.sh
+
 ## MARKET PERFORMANCE
 printf "Building Docker for Market Performance . . .\n"
 docker build -f ~/cn-group03/app/microservices/market-performance/Dockerfile -t market_performance ~/cn-group03/app/microservices/market-performance/
