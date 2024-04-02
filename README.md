@@ -5,11 +5,8 @@
 
 
 # Running (provisory)
-$ cd app/data/Amazon_metadata
 
-$ python metadata_clusters.py
-
-$ cd ~/cn-group03
+$ cd ~/cn-group03/api
 
 $ python app.py
 
