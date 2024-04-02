@@ -5,5 +5,5 @@ cd ~/cn-group03/scripts
 chmod +x ~/cn-group03/scripts/proto_create.sh
 ./proto_create.sh
 
-cd ~/cn-group03/
+cd ~/cn-group03/api/
 python app.py

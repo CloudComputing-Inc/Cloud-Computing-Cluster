@@ -3,20 +3,23 @@
 - Beatriz Rosa 55313, José Ricardo Ribeiro 62761, Christopher Anaya 60566, Ayla Stehling 63327
 
 
-# Running (provisory)
+# Running (external communication)
 
-$ cd ~/cn-group03/api
+$ cd ~/cn-group03/scripts
 
-$ python app.py
+$ ./run.sh
 
+# Running (internal communication)
 ## Market Performance Service with GRPC example:
-
 ### Server:
+$ pip install --upgrade pip
+
 $ python -m venv venv
 
 $ source venv/bin/activate
 
 (venv) $ cd ~/cn-group03/app/microservices/market-performance
+
 
 (venv) $ python -m pip install -r requirements.txt
 
