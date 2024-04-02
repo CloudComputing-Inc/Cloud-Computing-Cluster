@@ -5,6 +5,7 @@
 
 # Running (provisory)
 $ cd ~/cn-group03/scripts
+
 $ ./run.sh
 
 
