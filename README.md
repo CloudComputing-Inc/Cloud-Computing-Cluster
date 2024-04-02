@@ -3,14 +3,13 @@
 - Beatriz Rosa 55313, José Ricardo Ribeiro 62761, Christopher Anaya 60566, Ayla Stehling 63327
 
 
-
 # Running (provisory)
 
 $ cd ~/cn-group03/api
 
 $ python app.py
 
-## Market Performance Service with GRPC:
+## Market Performance Service with GRPC example:
 
 ### Server:
 $ python -m venv venv
