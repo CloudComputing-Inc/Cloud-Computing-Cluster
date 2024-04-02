@@ -1,0 +1,92 @@
+openapi: 3.0.0
+info:
+  title: Reviews API
+  version: 1.0.0
+paths:
+  /reviews:
+    post:
+      summary: Add a new review
+      description: Allows premium users to add new reviews.
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad request
+      # Request body, parameters, security requirements, etc. need to be defined here
+    
+    get:
+      summary: Filter reviews
+      description: Allows users to filter reviews by product ID, review time, reviewer name, rating, or custom filters.
+      parameters:
+        - name: productId
+          in: query
+          schema:
+            type: string
+          description: Product ID to filter reviews
+        - name: reviewTime
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Time of the review to filter by
+        - name: reviewerName
+          in: query
+          schema:
+            type: string
+          description: Reviewer name to filter by
+        - name: rating
+          in: query
+          schema:
+            type: integer
+            format: int32
+          description: Rating to filter by
+        - name: filters
+          in: query
+          schema:
+            type: string
+          description: Custom filters in a query string
+      responses:
+        '200':
+          description: OK
+
+  /reviews/{reviewId}:
+    parameters:
+      - name: reviewId
+        in: path
+        required: true
+        schema:
+          type: string
+    put:
+      summary: Edit a review
+      description: Allows premium users to edit their reviews.
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+    delete:
+      summary: Delete a review
+      description: Allows premium users to delete their reviews.
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+
+ 
+
+  /reviews/search/{queryName}:
+    parameters:
+      - name: queryName
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Use a pre-defined search query
+      description: Allows use of pre-defined search queries.
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
