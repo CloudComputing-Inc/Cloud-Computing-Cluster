@@ -9,31 +9,27 @@ paths:
   /metadata:
     get:
       summary: Retrieve product metadata
-      operationId: getMetadata
-      description: Fetch metadata for products, with optional filtering by category, price range, and brand.
+      operationId: metadata_routes.get_metadata
       parameters:
         - in: query
           name: category
+          required: true
           schema:
             type: string
-          description: Filter by product category.
         - in: query
           name: brand
           schema:
             type: string
-          description: Filter by product brand.
         - in: query
           name: minPrice
           schema:
             type: number
             format: float
-          description: Minimum price range filter.
         - in: query
           name: maxPrice
           schema:
             type: number
             format: float
-          description: Maximum price range filter.
       responses:
         '200':
           description: A list of product metadata matching the filter criteria.
@@ -42,37 +38,30 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: './metadata-schema.yaml#/Metadata'
-        '400':
-          description: Bad request. Invalid parameters provided.
-        '404':
-          description: No matching metadata found.
+                  $ref: '#/components/schemas/Product'
   /categories:
     get:
       summary: Retrieve main categories
+      operationId: metadata_routes.get_main_categories
       responses:
         '200':
           description: A list of main categories available.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  main_categories:
-                    type: array
-                    items:
-                      type: string
-
+                type: array
+                items:
+                  type: string
   /top-products:
     get:
       summary: Retrieve top ranking products in a category
+      operationId: metadata_routes.get_top_products
       parameters:
         - in: query
           name: category
           required: true
           schema:
             type: string
-          description: The category to retrieve top products from.
       responses:
         '200':
           description: A list of top ranking products in the specified category.
@@ -82,17 +71,16 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Product'
-
   /top-brand:
     get:
       summary: Retrieve the top brand in a category
+      operationId: metadata_routes.get_top_brand
       parameters:
         - in: query
           name: category
           required: true
           schema:
             type: string
-          description: The category to retrieve the top brand from.
       responses:
         '200':
           description: The top brand in the specified category and the count of products.
@@ -123,4 +111,4 @@ components:
         categories:
           type: array
           items:
-            type: string          
+            type: string
