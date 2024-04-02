@@ -3,11 +3,11 @@
 - Beatriz Rosa 55313, José Ricardo Ribeiro 62761, Christopher Anaya 60566, Ayla Stehling 63327
 
 
-# Running (external communication)
+# Running 
 $ chmod +x ~/cn-group03/scripts/run.sh
 
 $ ./scripts/run.sh
-
+<!-- 
 # Running (internal communication)
 ## Market Performance Service with GRPC example:
 ### Server:
@@ -42,4 +42,4 @@ $ python
 
 >>> request= GetMainCategoriesRequest()
 
->>> client.GetMainCategories(request)
+>>> client.GetMainCategories(request) -->

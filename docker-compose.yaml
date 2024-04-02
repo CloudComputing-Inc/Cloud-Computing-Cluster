@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  api_gateway:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: api_gateway
+    container_name: api_gateway_container
+    ports:
+      - "8000:8000"
+    environment:
+      - MARKET_PERF_HOST=market_performance_container
+    networks:
+      - microservices
+
+  market_performance:
+    build:
+      context: ./app/microservices/market-performance
+      dockerfile: Dockerfile
+    image: market_performance
+    container_name: market_performance_container
+    ports:
+      - "50053:50053"
+    networks:
+      - microservices
+
+networks:
+  microservices: 
