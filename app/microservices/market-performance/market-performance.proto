@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+// Import statements for any required types
+import "google/protobuf/wrappers.proto";
+
+service MarketPerformanceService {
+  rpc GetProductMetadata(GetProductMetadataRequest) returns (GetProductMetadataResponse);
+  rpc GetMainCategories(GetMainCategoriesRequest) returns (GetMainCategoriesResponse);
+  rpc GetTopProducts(GetTopProductsRequest) returns (GetTopProductsResponse);
+  rpc GetTopBrand(GetTopBrandRequest) returns (GetTopBrandResponse);
+}
+
+message GetProductMetadataRequest {
+  string category = 1;
+  string brand = 2;
+  google.protobuf.FloatValue minPrice = 3;
+  google.protobuf.FloatValue maxPrice = 4;
+}
+
+message GetProductMetadataResponse {
+  repeated Product products = 1;
+}
+
+message GetMainCategoriesRequest {}
+
+message GetMainCategoriesResponse {
+  repeated string mainCategories = 1;
+}
+
+message GetTopProductsRequest {
+  string category = 1;
+}
+
+message GetTopProductsResponse {
+  repeated Product topProducts = 1;
+}
+
+message GetTopBrandRequest {
+  string category = 1;
+}
+
+message GetTopBrandResponse {
+  string topBrand = 1;
+  int32 count = 2;
+}
+
+message Product {
+  string title = 1;
+  string brand = 2;
+  float price = 3;
+  string rank = 4;
+  repeated string categories = 5;
+}

@@ -1,21 +1,6 @@
-# Cloud Computing Project Group 03
-## Members: 
-- Beatriz Rosa 55313, José Ricardo Ribeiro 62761, Christopher Anaya 60566, Ayla Stehling 63327
+### Market Performance Service with GRPC:
 
-
-
-# Running (provisory)
-$ cd app/data/Amazon_metadata
-
-$ python metadata_clusters.py
-
-$ cd ~/cn-group03
-
-$ python app.py
-
-## Market Performance Service with GRPC:
-
-### Server:
+Server:
 $ python -m venv venv
 
 $ source venv/bin/activate
@@ -24,10 +9,9 @@ $ source venv/bin/activate
 
 (venv) $ python -m pip install -r requirements.txt
 
-$ python market-performance.py
 
 
-### Client:
+Client:
 $ cd ~/cn-group03/app/microservices/market-performance
 
 $ python
