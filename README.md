@@ -4,6 +4,7 @@
 
 
 # Running (external communication)
+$ chmod +x ~/cn-group03/scripts/run.sh
 
 $ cd ~/cn-group03/scripts
 
