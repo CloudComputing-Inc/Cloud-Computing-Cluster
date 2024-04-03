@@ -4,9 +4,33 @@
 
 
 # Running 
-$ chmod +x ~/cn-group03/scripts/run.sh
+-----------------------------------------------------
+### Phase 3
+Install docker and run the script: \
+`./scripts/run.sh` 
 
-$ ./scripts/run.sh
+In case of permission denied, run:
+
+`chmod +x ~/cn-group03/scripts/run.sh`
+
+
+
+# Roles
+#Role | Role                                                  | Number  | Name            
+ :--: |:----------------------------------------------------- | :------ |:---------------
+1     | Microservices                                         | fc55313 | Beatriz Rosa     
+2     | Data Science                                          | fc60566 | Christopher Anaya   
+3     | TODO                                                  | fc62761 | José Ricardo Ribeiro 
+4     | TODO                                                  | fc63327 | Ayla Stehling
+
+## Microservices
+ | Name of microservice                                  | Number  | Responsible            
+ |:----------------------------------------------------- | :------ |:---------------
+ | API Gateway and Market-Performance                    | fc55313 | Beatriz Rosa     
+ | Sentiment Analysis                                    | fc60566 | Christopher Anaya   
+| TODO                                                  | fc62761 | José Ricardo Ribeiro 
+| TODO                                                  | fc63327 | Ayla Stehling
+
 <!-- 
 # Running (internal communication)
 ## Market Performance Service with GRPC example:
