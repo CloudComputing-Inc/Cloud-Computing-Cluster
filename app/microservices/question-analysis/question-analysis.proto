@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+// Import statements for any required types
+import "google/protobuf/wrappers.proto";
+
+service LanguageAnalysisService {
+    rpc GetStringAnswer(GetStringAnswerRequest) returns (GetStringAnswerResponse);
+    rpc GetProductProductAnswer(GetProductAnswerRequest) returns (GetProductAnswerResponse);
+    rpc GetAnswerType(GetAnswerTypeRequest) returns (GetAnswerTypeResponse);
+    rpc GetQuestionType(GetQuestionTypeRequest) returns (GetQuestionTypeResponse);
+    rpc GetTimeOfAnswer(GetTimeOfAnswerRequest) returns (GetTimeOfAnswerResponse);
+}
+
+enum QuestionType {
+    YES = 0;
+    NO = 1;
+}
+
+enum AnswerType {
+    Y = 0;
+    N = 1;
+    Q = 2;
+}
+
+message qAndA {
+    string asin = 1;
+    QuestionType questionType = 2;
+    AnswerType answerType = 3;
+    string question = 4;
+    string answer = 5;
+}
+
+message GetStringAnswerRequest {
+    string asin = 1;
+    string question = 2;
+}
+
+message GetStringAnswerResponse {
+    repeated qAndA answer = 1;
+}
+
+message GetProductAnswerRequest {
+    string asin = 1;
+}
+
+message GetProductAnswerResponse {
+    repeated qAndA answer = 1;
+}
+
+message GetQuestionTypeRequest {
+    string asin = 1;
+    string question = 2;
+}
+
+message GetQuestionTypeResponse {
+    QuestionType questionType = 1;
+}
+
+message GetAnswerTypeRequest {
+    string asin = 1;
+    string answer = 2;
+}
+
+message GetAnswerTypeResponse {
+    AnswerType answerType = 1;
+}
+
+message GetTimeOfAnswerRequest {
+    string asin = 1;
+    string question = 2;
+}
+
+message GetTimeOfAnswerResponse {
+    string anserTime = 1;
+}
