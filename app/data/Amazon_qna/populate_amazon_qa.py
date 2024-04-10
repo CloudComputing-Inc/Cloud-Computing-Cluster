@@ -7,7 +7,8 @@ user = "need_user"
 password = "needpassword"
 up = user + ":" + password
 
-client = MongoClient("mongodb+srv://"+up+"@qna.lnpq3.mongodb.net/Qna?retryWrites=true&w=majority")
+#client = MongoClient("mongodb+srv://"+up+"@single_qna.mongodb.net/?retryWrites=true&w=majority")
+client = MongoClient("mongodb://need_user:needpassword@single_qna.mongodb.net:2500/?retryWrites=true&w=majority")
 db = client["database"]
 
 # drop everything in there
