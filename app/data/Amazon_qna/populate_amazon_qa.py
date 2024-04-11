@@ -3,8 +3,10 @@ from pymongo import MongoClient
 from pprint import pprint
 
 # connect to MongoDB, change the << MONGODB URL >> to reflect your own connection string
-user = "need_user"
-password = "needpassword"
+#user = "example_user"
+#password = "mnSPZHNF5HogN1Dt"
+user = "exampleuser"
+password = "Ra2lMTHV3KmzBaGM"
 up = user + ":" + password
 
 #client = MongoClient("mongodb+srv://"+up+"@single_qna.mongodb.net/?retryWrites=true&w=majority")
