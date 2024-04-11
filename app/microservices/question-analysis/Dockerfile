@@ -8,4 +8,4 @@ WORKDIR /service
 RUN pip install -r requirements.txt
 
 EXPOSE 50053
-ENTRYPOINT [ "python", "question-analysis.py" ]
+ENTRYPOINT [ "python", "question-analysis.py"]
