@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+// Define a message for a review
+message Review {
+    float rating = 1;
+    string title = 2;
+    string text = 3;
+    string images = 4;  // JSONB field represented as string
+    string asin = 5;
+    string parent_asin = 6;
+    string user_id = 7;
+    int64 timestamp = 8;
+    bool verified_purchase = 9;
+    int64 helpful_vote = 10;
+}
+
+// Define request and response messages for each CRUD operation
+
+// Create operation
+message CreateReviewRequest {
+    Review review = 1;
+}
+
+message CreateReviewResponse {
+    Review review = 1;
+}
+
+// Read operation
+message ReadReviewRequest {
+    string review_id = 1;
+}
+
+message ReadReviewResponse {
+    Review review = 1;
+}
+
+// Update operation
+message UpdateReviewRequest {
+    string review_id = 1;
+    Review review = 2;
+}
+
+message UpdateReviewResponse {
+    Review review = 1;
+}
+
+// Delete operation
+message DeleteReviewRequest {
+    string review_id = 1;
+}
+
+message DeleteReviewResponse {
+    bool success = 1;
+}
+
+// Define the gRPC service for reviews
+service ReviewService {
+    rpc CreateReview (CreateReviewRequest) returns (CreateReviewResponse);
+    rpc ReadReview (ReadReviewRequest) returns (ReadReviewResponse);
+    rpc UpdateReview (UpdateReviewRequest) returns (UpdateReviewResponse);
+    rpc DeleteReview (DeleteReviewRequest) returns (DeleteReviewResponse);
+}
