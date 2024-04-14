@@ -1,5 +1,5 @@
 DELETE CLUSTER:
-gcloud container clusters delete cluster-amazon_data --zone europe-west4-a
+gcloud container clusters delete cluster-amazon-data --zone europe-west4-a
 
 DELETE Persistent Disks:
 gcloud compute disks list
