@@ -42,7 +42,7 @@ spec:
     - protocol: TCP
       port: 8000
       targetPort: 8000
-  type: ClusterIP
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -88,7 +88,7 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"  # service backend is expecting HTTPS traffic
 spec:
   tls:
-    - secretName: amazon_data  # The name of the TLS secret
+    - secretName: amazon-data  # The name of the TLS secret
   rules:
     - http:
         paths:

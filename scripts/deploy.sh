@@ -31,7 +31,8 @@ docker images
 gcloud container images list
 kubectl get nodes
 # Get credentials for kubectl
-gcloud container clusters get-credentials cluster-amazon_data --zone europe-west4-a
+gcloud container clusters get-credentials cluster-amazon-data --zone europe-west4-a
 cd ../../..
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
 # Apply the deployment configuration
-kubectl apply -f deploy.yaml
+kubectl apply -f ~/cn-group03/kubernetes/deploy.yaml
