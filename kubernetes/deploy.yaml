@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+      - name: api-gateway
+        image: gcr.io/YOUR_PROJECT_ID/api_gateway
+        ports:
+        - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: api-gateway-service
+spec:
+  selector:
+    app: api-gateway
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: market-performance-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: market-performance
+  template:
+    metadata:
+      labels:
+        app: market-performance
+    spec:
+      containers:
+      - name: market-performance
+        image: gcr.io/YOUR_PROJECT_ID/market_performance
+        ports:
+        - containerPort: 50051  
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: market-performance-service
+spec:
+  selector:
+    app: market-performance
+  ports:
+    - protocol: TCP
+      port: 50051  
+      targetPort: 50051
+  type: ClusterIP
