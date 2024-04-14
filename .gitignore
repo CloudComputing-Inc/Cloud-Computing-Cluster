@@ -10,3 +10,4 @@ market_performance_pb2.py
 yelp_dataset/
 Pipfile
 Pipfile.lock
+app/data/Yelp_reviews_dataset/yelp_dataset.db
