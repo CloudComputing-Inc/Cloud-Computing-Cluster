@@ -15,6 +15,8 @@ app.secret_key = env.get("APP_SECRET_KEY")
 
 oauth = OAuth(app)
 
+#TODO urls
+
 oauth.register(
     "auth0",
     client_id=env.get("AUTH0_CLIENT_ID"),
