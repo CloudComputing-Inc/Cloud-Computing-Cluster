@@ -10,8 +10,21 @@ Install docker and run the script: \
 `./scripts/run.sh` 
 
 In case of permission denied, run:
-
 `chmod +x ~/cn-group03/scripts/run.sh`
+
+### Phase 4
+1. New project in GCP
+2. Delete cluster in GCP and GCR(Google Container Registry)
+3. Open Google Cloud Shell in the project and run:
+
+`./scripts/cluster_create.sh`
+
+And then:
+
+`./scripts/deploy.sh`
+
+
+
 
 
 
