@@ -7,5 +7,5 @@ WORKDIR /service
 
 RUN pip install -r requirements.txt
 
-EXPOSE 5000
+EXPOSE 500059
 ENTRYPOINT [ "python", "server.py" ]
