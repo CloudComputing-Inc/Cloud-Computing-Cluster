@@ -41,7 +41,7 @@ And then:
  |:----------------------------------------------------- | :------ |:---------------
  | API Gateway and Market-Performance                    | fc55313 | Beatriz Rosa     
  | Sentiment Analysis                                    | fc60566 | Christopher Anaya   
- | TODO                                                  | fc62761 | José Ricardo Ribeiro 
+ | Yelp Category Recommendation                          | fc62761 | José Ricardo Ribeiro 
  | Question-Analysis                                     | fc63327 | Ayla Stehling
 
 <!-- 

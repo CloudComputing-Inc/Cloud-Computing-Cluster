@@ -10,9 +10,21 @@ gcloud compute forwarding-rules list
 gcloud compute forwarding-rules delete [NAME] --region [REGION]
 gcloud compute target-pools delete [NAME] --region [REGION]
 
+Ex:
+gcloud compute forwarding-rules delete afd89cf02ab7b4736ad26ee46195a68c --region europe-west4
+gcloud compute target-pools delete afd89cf02ab7b4736ad26ee46195a68c --region europe-west4
+
 CLEAN CONTAINER Registry:
 gcloud container images list
 gcloud container images delete [IMAGE_NAME] --force-delete-tags
+
+Ex:
+gcloud container images delete gcr.io/test-project-tp1/api-gateway --force-delete-tags
+gcloud container images delete gcr.io/test-project-tp1/market-performance --force-delete-tags
+
+
+LOADBALANCER DELETE:
+kubectl delete svc api-gateway-service
 
 CLEAN Cloud Storage:
 gsutil ls
