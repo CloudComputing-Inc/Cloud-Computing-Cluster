@@ -5,8 +5,8 @@ from pymongo import MongoClient
 from concurrent import futures
 
 # connect to MongoDB, change the user and passwordX  to reflect your own clusters  connection strings
-user = "need_user"
-password = "needpassword"
+user = "exampleuser"
+password = "Ra2lMTHV3KmzBaGM"
 up = user + ":" + password
 
 client = MongoClient("mongodb+srv://"+up+"@single_qna.mongodb.net/Qna?retryWrites=true&w=majority")
