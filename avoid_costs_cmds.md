@@ -14,6 +14,14 @@ CLEAN CONTAINER Registry:
 gcloud container images list
 gcloud container images delete [IMAGE_NAME] --force-delete-tags
 
+Ex:
+gcloud container images delete gcr.io/test-project-tp1/api-gateway --force-delete-tags
+gcloud container images delete gcr.io/test-project-tp1/market-performance --force-delete-tags
+
+
+LOADBALANCER DELETE:
+kubectl delete svc api-gateway-service
+
 CLEAN Cloud Storage:
 gsutil ls
 gsutil rm -r gs://[BUCKET_NAME]
