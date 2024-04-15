@@ -1,11 +1,11 @@
 gcloud services enable cloudapis.googleapis.com container.googleapis.com containerregistry.googleapis.com
 kubectl get nodes 
-# Creating a cluster with the smallest machine type and only 1 node to minimize costs
+# Creating a cluster with 3 nodes and e2-medium machine type
 gcloud container clusters create cluster-amazon-data \
     --zone=europe-west4-a \
     --cluster-version=latest \
-    --num-nodes=1 \
-    --machine-type=e2-micro \
+    --num-nodes=3 \
+    --machine-type=e2-medium \
     --enable-autorepair \
     --scopes=service-control,service-management,compute-rw,storage-ro,cloud-platform,logging-write,monitoring-write
 gcloud container clusters get-credentials cluster-amazon-data --zone europe-west4-a
