@@ -2,6 +2,8 @@ import csv
 import os
 from google.cloud.sql.connector import Connector, IPTypes
 import sqlalchemy
+from sqlalchemy import create_engine, MetaData, Table
+from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import text  # Import text function
 
 
@@ -60,25 +62,31 @@ base_path = '/home/xjrr/fcul/cloud_computing/Project/cn-group03/yelp_dataset'
 
 # Iterate through the dictionary and process each file-table pair
 with engine.connect() as conn:
+    metadata = MetaData()  # Correctly instantiate MetaData
+    metadata.reflect(bind=engine)  # Reflect the database using the engine.
     for file_name, table_name in files_to_tables.items():
         full_path = os.path.join(base_path, file_name)
+        table = Table(table_name, metadata, autoload_with=engine)  # Reflected table
+        batch_data = []
+
         with open(full_path, newline='') as csvfile:
             reader = csv.DictReader(csvfile)
-            batch_count = 0
+            counter = 0
             for row in reader:
-                columns = ', '.join([f'"{column}"' for column in row.keys()])
-                values = ', '.join([f"'{v.replace("'", "''")}'" for v in row.values()])  # Handle single quote in values
-                query = f"INSERT INTO \"{table_name}\" ({columns}) VALUES ({values});"
-                conn.execute(text(query))  # Execute the query safely using text function
-                batch_count += 1
+                batch_data.append(row)
+                counter += 1
+                if len(batch_data) == 100:
+                    conn.execute(table.insert(), batch_data)
+                    batch_data = []
+                    print(f"{counter} - 100 rows uploaded to {table_name}.")
+                    conn.commit()
 
-                if batch_count % 100 == 0:  # Check if batch_count is a multiple of 100
-                    print(f"{batch_count} - {file_name} - {table_name} - {query}")
-                    conn.commit()  # Commit the transaction
-                    print(f"+ 100 rows committed to {table_name}")
-            
-            conn.commit()  # Commit any remaining transactions
-            print(f"All data uploaded successfully to {table_name}.")
+            if batch_data:  # Insert any remaining data
+                conn.execute(table.insert(), batch_data)
+                conn.commit()
+
+          # Commit after each file's rows have been processed
+        print(f"All data uploaded successfully to {table_name}.")
 
 print("Data uploaded successfully.")
 
