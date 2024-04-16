@@ -13,8 +13,11 @@ In case of permission denied, run:
 `chmod +x ~/cn-group03/scripts/run.sh`
 
 ### Phase 4
-1. New project in GCP
-2. Delete cluster in GCP and GCR(Google Container Registry)
+1. Create new project in GCP called 'test-project-tp1'
+2. Delete cluster in GCP and GCR(Google Container Registry) and kubernetes allocated resources:
+
+`./scripts/gcp_clean.sh`
+
 3. Open Google Cloud Shell in the project and run:
 
 `./scripts/cluster_create.sh`

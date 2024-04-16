@@ -59,7 +59,7 @@ metadata:
   labels:
     app: api-gateway
 spec:
-  type: NodePort  # Changed from LoadBalancer to ClusterIP since Ingress will handle access
+  type: NodePort  
   selector:
     app: api-gateway
   ports:
