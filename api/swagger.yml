@@ -4,7 +4,7 @@ info:
   description: API to analyze market trends, track sales rank performance over time, and provide best performing products by category.
   version: 1.0.0
 servers:
-  - url: /api/v1
+  - url: /
 paths:
   /metadata:
     get:
