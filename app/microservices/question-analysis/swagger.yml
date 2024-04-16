@@ -1,0 +1,167 @@
+openapi: 3.0.0
+info:
+  title: Language Analysis API
+  description: API to perform language analysis tasks using gRPC
+  version: 1.0.0
+servers:
+  - url: /api/v1
+paths:
+  /get_string_answer:
+    post:
+      summary: Retrieve string answers
+      operationId: LanguageAnalysisService.GetStringAnswer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetStringAnswerRequest'
+      responses:
+        '200':
+          description: A list of string answers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetStringAnswerResponse'
+
+  /get_product_product_answer:
+    post:
+      summary: Retrieve product answers
+      operationId: LanguageAnalysisService.GetProductProductAnswer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetProductProductAnswerRequest'
+      responses:
+        '200':
+          description: A list of product answers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProductAnswerResponse'
+
+  /get_answer_type:
+    post:
+      summary: Retrieve answer types
+      operationId: LanguageAnalysisService.GetAnswerType
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetAnswerTypeRequest'
+      responses:
+        '200':
+          description: A list of answer types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProductAnswerResponse'
+
+  /get_question_type:
+    post:
+      summary: Retrieve question types
+      operationId: LanguageAnalysisService.GetQuestionType
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetQuestionTypeRequest'
+      responses:
+        '200':
+          description: A list of question types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProductAnswerResponse'
+
+  /get_time_of_answer:
+    post:
+      summary: Retrieve answer times
+      operationId: LanguageAnalysisService.GetTimeOfAnswer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetTimeOfAnswerRequest'
+      responses:
+        '200':
+          description: A list of answer times
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProductAnswerResponse'
+
+components:
+  schemas:
+    GetStringAnswerRequest:
+      type: object
+      properties:
+        asin:
+          type: string
+        question:
+          type: string
+
+    GetProductProductAnswerRequest:
+      type: object
+      properties:
+        asin:
+          type: string
+
+    GetAnswerTypeRequest:
+      type: object
+      properties:
+        asin:
+          type: string
+        answer:
+          type: string
+
+    GetQuestionTypeRequest:
+      type: object
+      properties:
+        asin:
+          type: string
+        question:
+          type: string
+
+    GetTimeOfAnswerRequest:
+      type: object
+      properties:
+        asin:
+          type: string
+        question:
+          type: string
+
+    GetStringAnswerResponse:
+      type: object
+      properties:
+        qAndA:
+          type: array
+          items:
+            $ref: '#/components/schemas/QAndA'
+
+    GetProductAnswerResponse:
+      type: object
+      properties:
+        qAndA:
+          type: array
+          items:
+            $ref: '#/components/schemas/QAndA'
+
+    QAndA:
+      type: object
+      properties:
+        answer:
+          type: string
+        product:
+          type: string
+        answerType:
+          type: string
+        questionType:
+          type: string
+        answerTime:
+          type: string
