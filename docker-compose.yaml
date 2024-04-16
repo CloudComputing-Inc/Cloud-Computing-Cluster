@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-  api_gateway:   # This is the Amazon Reviews Service
+  api_gateway:
     build:
       context: ./api
       dockerfile: Dockerfile
@@ -22,30 +22,6 @@ services:
     container_name: market_performance_container
     ports:
       - "50053:50053"
-    networks:
-      - microservices
-
-  yelp_reviews:
-    build:
-      context: ./app/microservices/yelp-reviews
-      dockerfile: Dockerfile
-    image: yelp_reviews
-    container_name: yelp_reviews_container
-    ports:
-      - "5001:5000"
-    networks:
-      - microservices
-
-  nginx_gateway:
-    image: nginx:latest
-    container_name: nginx_gateway_container
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-    depends_on:
-      - api_gateway
-      - yelp_reviews
     networks:
       - microservices
 
