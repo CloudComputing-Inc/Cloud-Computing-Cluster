@@ -1,10 +1,29 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 import requests
+import os
+from urllib.parse import quote  
+
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/yelp_db'
+
+# URL-encode the password
+password_encoded = quote('vN`Y{N4H<7)g5BGb')
+
+# Dynamically build the connection string using the encoded password
+database_url = os.environ.get('DATABASE_URL', f'postgresql://postgres:{password_encoded}@34.107.119.237:5432/postgres')
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'connect_args': {
+        'sslmode': 'require',
+        'sslrootcert': 'cert/server-ca.pem',
+        'sslcert': 'cert/client-cert.pem',
+        'sslkey': 'cert/client-key.pem'
+    }
+}
 db = SQLAlchemy(app)
 
 class Business(db.Model):
