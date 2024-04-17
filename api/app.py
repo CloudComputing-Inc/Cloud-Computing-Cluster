@@ -15,7 +15,7 @@ from flask import Flask, request, jsonify
 from authlib.integrations.flask_oauth2 import ResourceProtector
 #from api.auth.validator import Auth0JWTBearerTokenValidator
 from validator import Auth0JWTBearerTokenValidator
-import validator
+import validator as validator
 '''
 ENV_FILE = find_dotenv()
 if ENV_FILE:

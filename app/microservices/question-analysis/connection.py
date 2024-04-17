@@ -7,7 +7,7 @@ from pymongo import MongoClient
 from flask import Flask, request, jsonify
 from authlib.integrations.flask_oauth2 import ResourceProtector
 #from api.auth.validator import Auth0JWTBearerTokenValidator
-from validator import Auth0JWTBearerTokenValidator
+from api.validator import Auth0JWTBearerTokenValidator
 
 app = Flask(__name__)
 '''

@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from authlib.integrations.flask_oauth2 import ResourceProtector
-from validator import Auth0JWTBearerTokenValidator
+from api.validator import Auth0JWTBearerTokenValidator
 
 # Create the Flask app
 app = Flask(__name__)
