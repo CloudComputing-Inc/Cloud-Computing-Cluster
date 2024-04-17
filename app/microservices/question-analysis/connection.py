@@ -10,7 +10,7 @@ from authlib.integrations.flask_oauth2 import ResourceProtector
 from validator import Auth0JWTBearerTokenValidator
 
 app = Flask(__name__)
-
+'''
 # Connect to MongoDB
 user = "exampleuser"
 password = "Ra2lMTHV3KmzBaGM"
@@ -29,14 +29,14 @@ validator = Auth0JWTBearerTokenValidator(
 )
 require_auth = ResourceProtector()
 require_auth.register_token_validator(validator)
-
+'''
 '''# Define endpoints for gRPC service functions
 @app.route('/get_string_answer', methods=['POST'])
 def get_string_answer():
     request_data = request.json
     response = stub.GetStringAnswer(question_analysis_pb2.GetStringAnswerRequest(**request_data))
     return jsonify(response.qAndA)'''
-
+'''
 @app.route('/api/v1/get_string_answer', methods=['POST'])
 @authenticate
 def get_string_answer():
@@ -114,7 +114,7 @@ def has_permission(permission):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
-
+'''
 
 # Create a Flask app with connexion
 app = connexion.App(__name__, specification_dir="./")

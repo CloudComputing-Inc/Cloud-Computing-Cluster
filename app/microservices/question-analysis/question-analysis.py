@@ -9,7 +9,7 @@ user = "exampleuser"
 password = "Ra2lMTHV3KmzBaGM"
 up = user + ":" + password
 
-client = MongoClient("mongodb+srv://"+up+"@single_qna.mongodb.net/Qna?retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://"+up+"singleqna.me1c1ax.mongodb.net/")
 db = client["database"]
 collection = db["qna"]
 

@@ -1,3 +1,37 @@
+'''from flask import Flask, jsonify
+from authlib.integrations.flask_client import OAuth
+
+app = Flask(__name__)
+oauth = OAuth(app)
+
+# Auth0 configuration
+oauth.register(
+    name='auth0',
+    client_id='YOUR_AUTH0_CLIENT_ID',
+    client_secret='YOUR_AUTH0_CLIENT_SECRET',
+    server_metadata_url='https://YOUR_AUTH0_DOMAIN/.well-known/openid-configuration',
+    client_kwargs={
+        'scope': 'openid profile email',
+        'audience': 'https:\\amazon-reviews.net',  # Include your API identifier here
+
+    },
+)
+
+# Auth middleware
+@app.before_request
+def require_auth():
+    if not oauth.auth0.authorized:
+        return jsonify(message='Unauthorized'), 401
+
+# Protected route
+@app.route('/authorized')
+def authorized():
+    return 'Secured Resource'
+
+if __name__ == '__main__':
+    app.run(debug=True)
+'''
+
 import json
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
@@ -26,7 +60,7 @@ oauth.register(
     },
     server_metadata_url=f'https://{env.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
 )
-
+'''
 # Initialize ResourceProtector and Auth0JWTBearerTokenValidator
 require_auth = ResourceProtector()
 validator = Auth0JWTBearerTokenValidator(
@@ -34,7 +68,7 @@ validator = Auth0JWTBearerTokenValidator(
     "https:\\amazon-reviews.net" 
 )
 require_auth.register_token_validator(validator)
-
+'''
 @app.route("/login")
 def login():
     return oauth.auth0.authorize_redirect(redirect_uri=url_for("callback", _external=True))
@@ -70,7 +104,7 @@ if __name__ == "__main__":
 
     """Python Flask API Auth0 integration example
 """
-
+'''
 from os import environ as env
 
 from dotenv import load_dotenv, find_dotenv
@@ -118,4 +152,4 @@ def private_scoped():
         " authenticated and have a scope of read:messages to see"
         " this."
     )
-    return jsonify(message=response)
+    return jsonify(message=response)'''

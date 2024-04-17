@@ -25,5 +25,16 @@ services:
     networks:
       - microservices
 
+  question_analysis:
+    build:
+      context: ./app/microservices/question_analysis
+      dockerfile: Dockerfile
+    image: question_analysis
+    container_name: question_analysis_container
+    ports:
+      - "50055:50055"
+    networks:
+      - microservices
+
 networks:
   microservices: 
