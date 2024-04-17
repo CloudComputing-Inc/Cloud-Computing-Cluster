@@ -15,39 +15,39 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16q-and-a-language.proto\x1a\x1egoogle/protobuf/wrappers.proto\"}\n\x05qAndA\x12\x0c\n\x04\x61sin\x18\x01 \x01(\t\x12#\n\x0cquestionType\x18\x02 \x01(\x0e\x32\r.QuestionType\x12\x1f\n\nanswerType\x18\x03 \x01(\x0e\x32\x0b.AnswerType\x12\x10\n\x08question\x18\x04 \x01(\t\x12\x0e\n\x06\x61nswer\x18\x05 \x01(\t\"8\n\x16GetStringAnswerRequest\x12\x0c\n\x04\x61sin\x18\x01 \x01(\t\x12\x10\n\x08question\x18\x02 \x01(\t\"1\n\x17GetStringAnswerResponse\x12\x16\n\x06\x61nswer\x18\x01 \x03(\x0b\x32\x06.qAndA\"\'\n\x17GetProductAnswerRequest\x12\x0c\n\x04\x61sin\x18\x01 \x01(\t\"2\n\x18GetProductAnswerResponse\x12\x16\n\x06\x61nswer\x18\x01 \x03(\x0b\x32\x06.qAndA\"8\n\x16GetQuestionTypeRequest\x12\x0c\n\x04\x61sin\x18\x01 \x01(\t\x12\x10\n\x08question\x18\x02 \x01(\t\">\n\x17GetQuestionTypeResponse\x12#\n\x0cquestionType\x18\x01 \x01(\x0e\x32\r.QuestionType\"4\n\x14GetAnswerTypeRequest\x12\x0c\n\x04\x61sin\x18\x01 \x01(\t\x12\x0e\n\x06\x61nswer\x18\x02 \x01(\t\"8\n\x15GetAnswerTypeResponse\x12\x1f\n\nanswerType\x18\x01 \x01(\x0e\x32\x0b.AnswerType\"8\n\x16GetTimeOfAnswerRequest\x12\x0c\n\x04\x61sin\x18\x01 \x01(\t\x12\x10\n\x08question\x18\x02 \x01(\t\",\n\x17GetTimeOfAnswerResponse\x12\x11\n\tanserTime\x18\x01 \x01(\t*\x1f\n\x0cQuestionType\x12\x07\n\x03YES\x10\x00\x12\x06\n\x02NO\x10\x01*!\n\nAnswerType\x12\x05\n\x01Y\x10\x00\x12\x05\n\x01N\x10\x01\x12\x05\n\x01Q\x10\x02\x32\xfb\x02\n\x17LanguageAnalysisService\x12\x44\n\x0fGetStringAnswer\x12\x17.GetStringAnswerRequest\x1a\x18.GetStringAnswerResponse\x12N\n\x17GetProductProductAnswer\x12\x18.GetProductAnswerRequest\x1a\x19.GetProductAnswerResponse\x12>\n\rGetAnswerType\x12\x15.GetAnswerTypeRequest\x1a\x16.GetAnswerTypeResponse\x12\x44\n\x0fGetQuestionType\x12\x17.GetQuestionTypeRequest\x1a\x18.GetQuestionTypeResponse\x12\x44\n\x0fGetTimeOfAnswer\x12\x17.GetTimeOfAnswerRequest\x1a\x18.GetTimeOfAnswerResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x17question-analysis.proto\x1a\x1egoogle/protobuf/wrappers.proto\"}\n\x05qAndA\x12\x0c\n\x04\x61sin\x18\x01 \x01(\t\x12#\n\x0cquestionType\x18\x02 \x01(\x0e\x32\r.QuestionType\x12\x1f\n\nanswerType\x18\x03 \x01(\x0e\x32\x0b.AnswerType\x12\x10\n\x08question\x18\x04 \x01(\t\x12\x0e\n\x06\x61nswer\x18\x05 \x01(\t\"8\n\x16GetStringAnswerRequest\x12\x0c\n\x04\x61sin\x18\x01 \x01(\t\x12\x10\n\x08question\x18\x02 \x01(\t\"1\n\x17GetStringAnswerResponse\x12\x16\n\x06\x61nswer\x18\x01 \x03(\x0b\x32\x06.qAndA\"\'\n\x17GetProductAnswerRequest\x12\x0c\n\x04\x61sin\x18\x01 \x01(\t\"2\n\x18GetProductAnswerResponse\x12\x16\n\x06\x61nswer\x18\x01 \x03(\x0b\x32\x06.qAndA\"8\n\x16GetQuestionTypeRequest\x12\x0c\n\x04\x61sin\x18\x01 \x01(\t\x12\x10\n\x08question\x18\x02 \x01(\t\">\n\x17GetQuestionTypeResponse\x12#\n\x0cquestionType\x18\x01 \x01(\x0e\x32\r.QuestionType\"4\n\x14GetAnswerTypeRequest\x12\x0c\n\x04\x61sin\x18\x01 \x01(\t\x12\x0e\n\x06\x61nswer\x18\x02 \x01(\t\"8\n\x15GetAnswerTypeResponse\x12\x1f\n\nanswerType\x18\x01 \x01(\x0e\x32\x0b.AnswerType\"8\n\x16GetTimeOfAnswerRequest\x12\x0c\n\x04\x61sin\x18\x01 \x01(\t\x12\x10\n\x08question\x18\x02 \x01(\t\",\n\x17GetTimeOfAnswerResponse\x12\x11\n\tanserTime\x18\x01 \x01(\t*\x1f\n\x0cQuestionType\x12\x07\n\x03YES\x10\x00\x12\x06\n\x02NO\x10\x01*!\n\nAnswerType\x12\x05\n\x01Y\x10\x00\x12\x05\n\x01N\x10\x01\x12\x05\n\x01Q\x10\x02\x32\xfb\x02\n\x17LanguageAnalysisService\x12\x44\n\x0fGetStringAnswer\x12\x17.GetStringAnswerRequest\x1a\x18.GetStringAnswerResponse\x12N\n\x17GetProductProductAnswer\x12\x18.GetProductAnswerRequest\x1a\x19.GetProductAnswerResponse\x12>\n\rGetAnswerType\x12\x15.GetAnswerTypeRequest\x1a\x16.GetAnswerTypeResponse\x12\x44\n\x0fGetQuestionType\x12\x17.GetQuestionTypeRequest\x1a\x18.GetQuestionTypeResponse\x12\x44\n\x0fGetTimeOfAnswer\x12\x17.GetTimeOfAnswerRequest\x1a\x18.GetTimeOfAnswerResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
-_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'q_and_a_language_pb2', _globals)
+_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'question_analysis_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
-  _globals['_QUESTIONTYPE']._serialized_start=725
-  _globals['_QUESTIONTYPE']._serialized_end=756
-  _globals['_ANSWERTYPE']._serialized_start=758
-  _globals['_ANSWERTYPE']._serialized_end=791
-  _globals['_QANDA']._serialized_start=58
-  _globals['_QANDA']._serialized_end=183
-  _globals['_GETSTRINGANSWERREQUEST']._serialized_start=185
-  _globals['_GETSTRINGANSWERREQUEST']._serialized_end=241
-  _globals['_GETSTRINGANSWERRESPONSE']._serialized_start=243
-  _globals['_GETSTRINGANSWERRESPONSE']._serialized_end=292
-  _globals['_GETPRODUCTANSWERREQUEST']._serialized_start=294
-  _globals['_GETPRODUCTANSWERREQUEST']._serialized_end=333
-  _globals['_GETPRODUCTANSWERRESPONSE']._serialized_start=335
-  _globals['_GETPRODUCTANSWERRESPONSE']._serialized_end=385
-  _globals['_GETQUESTIONTYPEREQUEST']._serialized_start=387
-  _globals['_GETQUESTIONTYPEREQUEST']._serialized_end=443
-  _globals['_GETQUESTIONTYPERESPONSE']._serialized_start=445
-  _globals['_GETQUESTIONTYPERESPONSE']._serialized_end=507
-  _globals['_GETANSWERTYPEREQUEST']._serialized_start=509
-  _globals['_GETANSWERTYPEREQUEST']._serialized_end=561
-  _globals['_GETANSWERTYPERESPONSE']._serialized_start=563
-  _globals['_GETANSWERTYPERESPONSE']._serialized_end=619
-  _globals['_GETTIMEOFANSWERREQUEST']._serialized_start=621
-  _globals['_GETTIMEOFANSWERREQUEST']._serialized_end=677
-  _globals['_GETTIMEOFANSWERRESPONSE']._serialized_start=679
-  _globals['_GETTIMEOFANSWERRESPONSE']._serialized_end=723
-  _globals['_LANGUAGEANALYSISSERVICE']._serialized_start=794
-  _globals['_LANGUAGEANALYSISSERVICE']._serialized_end=1173
+  _globals['_QUESTIONTYPE']._serialized_start=726
+  _globals['_QUESTIONTYPE']._serialized_end=757
+  _globals['_ANSWERTYPE']._serialized_start=759
+  _globals['_ANSWERTYPE']._serialized_end=792
+  _globals['_QANDA']._serialized_start=59
+  _globals['_QANDA']._serialized_end=184
+  _globals['_GETSTRINGANSWERREQUEST']._serialized_start=186
+  _globals['_GETSTRINGANSWERREQUEST']._serialized_end=242
+  _globals['_GETSTRINGANSWERRESPONSE']._serialized_start=244
+  _globals['_GETSTRINGANSWERRESPONSE']._serialized_end=293
+  _globals['_GETPRODUCTANSWERREQUEST']._serialized_start=295
+  _globals['_GETPRODUCTANSWERREQUEST']._serialized_end=334
+  _globals['_GETPRODUCTANSWERRESPONSE']._serialized_start=336
+  _globals['_GETPRODUCTANSWERRESPONSE']._serialized_end=386
+  _globals['_GETQUESTIONTYPEREQUEST']._serialized_start=388
+  _globals['_GETQUESTIONTYPEREQUEST']._serialized_end=444
+  _globals['_GETQUESTIONTYPERESPONSE']._serialized_start=446
+  _globals['_GETQUESTIONTYPERESPONSE']._serialized_end=508
+  _globals['_GETANSWERTYPEREQUEST']._serialized_start=510
+  _globals['_GETANSWERTYPEREQUEST']._serialized_end=562
+  _globals['_GETANSWERTYPERESPONSE']._serialized_start=564
+  _globals['_GETANSWERTYPERESPONSE']._serialized_end=620
+  _globals['_GETTIMEOFANSWERREQUEST']._serialized_start=622
+  _globals['_GETTIMEOFANSWERREQUEST']._serialized_end=678
+  _globals['_GETTIMEOFANSWERRESPONSE']._serialized_start=680
+  _globals['_GETTIMEOFANSWERRESPONSE']._serialized_end=724
+  _globals['_LANGUAGEANALYSISSERVICE']._serialized_start=795
+  _globals['_LANGUAGEANALYSISSERVICE']._serialized_end=1174
 # @@protoc_insertion_point(module_scope)
