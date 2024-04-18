@@ -27,7 +27,7 @@ services:
 
   question_analysis:
     build:
-      context: ./app/microservices/question_analysis
+      context: ./app/microservices/question-analysis
       dockerfile: Dockerfile
     image: question_analysis
     container_name: question_analysis_container
