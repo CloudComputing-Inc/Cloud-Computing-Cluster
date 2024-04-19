@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 import requests
 import os
 from urllib.parse import quote  
+from sqlalchemy.engine import reflection
+
 
 
 app = Flask(__name__)
@@ -25,6 +27,8 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     }
 }
 db = SQLAlchemy(app)
+print("Database URL:", database_url)
+print("Database Engine Options:", app.config['SQLALCHEMY_ENGINE_OPTIONS'])
 
 class Business(db.Model):
     __tablename__ = 'business'
@@ -55,6 +59,10 @@ class Business(db.Model):
             'is_open': self.is_open
         }
 
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify({'message': 'Hello, World!'})
+
 @app.route('/businesses/<business_id>', methods=['GET'])
 def get_business(business_id):
     business = Business.query.get(business_id)
@@ -78,6 +86,12 @@ def get_top_rated_businesses():
     return jsonify([business.to_dict() for business in top_rated])
 
 
+def print_database_tables():
+    # Create an inspector object to inspect the database
+    inspector = reflection.Inspector.from_engine(db.engine)
+    # Retrieve and print the list of table names
+    tables = inspector.get_table_names()
+    print("Tables in the database:", tables)
+
 if __name__ == '__main__':
-    db.create_all()
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5005)

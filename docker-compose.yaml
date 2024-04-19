@@ -41,7 +41,7 @@ services:
     image: yelp_reviews
     container_name: yelp_reviews_container
     ports:
-      - "5001:5000"
+      - "5005:5005"
     networks:
       - microservices
 
