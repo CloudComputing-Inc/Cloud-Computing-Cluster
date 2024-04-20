@@ -20,3 +20,5 @@ spec:
         env:
         - name: MARKET_PERF_HOST
           value: market-performance-svc
+      imagePullSecrets:
+        - name: gcr-io

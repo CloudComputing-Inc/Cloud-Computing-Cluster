@@ -8,19 +8,11 @@ data:
 
     http {
         upstream api_gateway {
-            server api_gateway_container:8000;
+            server api-gateway-svc:80;
         }
 
-        # upstream market_performance {
-        #     server market_performance_container:50053;
-        # }
-
-        # upstream question_analysis {
-        #     server question_analysis_container:50055;
-        # }
-
         upstream yelp_reviews {
-            server yelp_reviews_container:5005;
+            server yelp-reviews-svc:80;
         }
 
         server {
@@ -29,14 +21,6 @@ data:
             location /api/ {
                 proxy_pass http://api_gateway/;
             }
-
-            # location /market/ {
-            #     proxy_pass http://market_performance/;
-            # }
-
-            # location /qa/ {
-            #     proxy_pass http://question_analysis/;
-            # }
 
             location /yelp/ {
                 proxy_pass http://yelp_reviews/;

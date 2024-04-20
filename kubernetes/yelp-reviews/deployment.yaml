@@ -19,6 +19,8 @@ spec:
           image: gcr.io/cloudcomputinginc/yelp_reviews:latest  # path to image in GCR
           ports:
             - containerPort: 5005
+      imagePullSecrets:
+        - name: gcr-io
           # Environment variables, if needed, go here
           # env:
           # - name: ENV_VAR_NAME
