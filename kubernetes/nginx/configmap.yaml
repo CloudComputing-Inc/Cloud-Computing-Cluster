@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  nginx.conf: |
+    events {}
+
+    http {
+        upstream api_gateway {
+            server api_gateway_container:8000;
+        }
+
+        # upstream market_performance {
+        #     server market_performance_container:50053;
+        # }
+
+        # upstream question_analysis {
+        #     server question_analysis_container:50055;
+        # }
+
+        upstream yelp_reviews {
+            server yelp_reviews_container:5005;
+        }
+
+        server {
+            listen 80;
+
+            location /api/ {
+                proxy_pass http://api_gateway/;
+            }
+
+            # location /market/ {
+            #     proxy_pass http://market_performance/;
+            # }
+
+            # location /qa/ {
+            #     proxy_pass http://question_analysis/;
+            # }
+
+            location /yelp/ {
+                proxy_pass http://yelp_reviews/;
+            }
+        }
+    }

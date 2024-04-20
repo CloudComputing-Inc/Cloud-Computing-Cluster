@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-gateway-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: api-gateway-svc
+            port:
+              number: 8000
+      - path: /yelp
+        pathType: Prefix
+        backend:
+          service:
+            name: yelp-reviews-svc
+            port:
+              number: 5005
+      # Add other paths for services
