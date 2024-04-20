@@ -134,9 +134,9 @@ def serve():
     market_performance_pb2_grpc.add_MarketPerformanceServiceServicer_to_server(
         MarketPerformanceService(), server
     )
-    server.add_insecure_port('[::]:50051')
+    server.add_insecure_port('[::]:50053')
     server.start()
-    print("Server started at [::]:50051")
+    print("Server started at [::]:50053")
     server.wait_for_termination()
 
 if __name__ == '__main__':
