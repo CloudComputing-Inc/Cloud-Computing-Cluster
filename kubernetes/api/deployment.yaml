@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: api-gateway
-        image: gcr.io/your-project/api_gateway:latest
+        image: gcr.io/cloudcomputinginc/api_gateway:latest # path to image in GCR
         ports:
         - containerPort: 8000
         env:

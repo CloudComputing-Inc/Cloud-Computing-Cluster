@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: yelp-reviews
-          image: gcr.io/your-project/yelp_reviews  # Replace with the path to your image in GCR
+          image: gcr.io/cloudcomputinginc/yelp_reviews:latest  # path to image in GCR
           ports:
             - containerPort: 5005
           # Environment variables, if needed, go here
