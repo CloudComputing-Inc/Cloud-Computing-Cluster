@@ -20,4 +20,3 @@ spec:
             name: yelp-reviews-svc
             port:
               number: 5005
-      # Add other paths for services
