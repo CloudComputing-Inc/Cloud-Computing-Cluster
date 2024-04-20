@@ -10,7 +10,7 @@ Install docker and run the script: \
 `./scripts/run.sh` 
 
 In case of permission denied, run:
-`chmod +x ~/cn-group03/scripts/run.sh`
+`chmod +x ~/cn-group03/scripts/*`
 
 ### Phase 4
 1. Create new project in GCP called 'test-project-tp1'
