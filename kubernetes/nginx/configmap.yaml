@@ -8,11 +8,11 @@ data:
 
     http {
         upstream api_gateway {
-            server api-gateway-svc:80;
+            server api-gateway-svc:8000;
         }
 
         upstream yelp_reviews {
-            server yelp-reviews-svc:80;
+            server yelp-reviews-svc:5005;
         }
 
         server {
