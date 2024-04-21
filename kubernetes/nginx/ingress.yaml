@@ -20,3 +20,10 @@ spec:
             name: yelp-reviews-svc
             port:
               number: 5005
+      - path: /market
+        pathType: Prefix
+        backend:
+          service:
+            name: market-analysis-svc
+            port:
+              number: 50053

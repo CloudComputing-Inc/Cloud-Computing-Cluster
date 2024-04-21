@@ -1,0 +1,159 @@
+openapi: 3.0.0
+info:
+  title: Market Analysis API
+  description: API to analyze market trends, track sales rank performance over time, and provide best performing products by category.
+  version: 1.0.0
+servers:
+  - url: /
+paths:
+  /metadata:
+    get:
+      summary: Retrieve product metadata
+      operationId: getMetadata
+      parameters:
+        - in: query
+          name: category
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: brand
+          schema:
+            type: string
+        - in: query
+          name: minPrice
+          schema:
+            type: number
+            format: float
+        - in: query
+          name: maxPrice
+          schema:
+            type: number
+            format: float
+      responses:
+        '200':
+          description: A list of product metadata matching the filter criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '400':
+          description: Invalid parameters were supplied.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Category not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /categories:
+    get:
+      summary: Retrieve main categories
+      operationId: getMainCategories
+      responses:
+        '200':
+          description: A list of main categories available.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '500':
+          description: Internal server error, unable to retrieve categories.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /top-products:
+    get:
+      summary: Retrieve top ranking products in a category
+      operationId: getTopProducts
+      parameters:
+        - in: query
+          name: category
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The 2 top ranking products in the specified category.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '404':
+          description: Category not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /top-brand:
+    get:
+      summary: Retrieve the top brand in a category
+      operationId: getTopBrand
+      parameters:
+        - in: query
+          name: category
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The top brand in the specified category and the count of products.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  top_brand:
+                    type: string
+                  count:
+                    type: integer
+        '404':
+          description: Category not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+        brand:
+          type: string
+        price:
+          type: number
+          format: float
+        rank:
+          type: integer
+        categories:
+          type: array
+          items:
+            type: string
