@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-  api_gateway:   # This is the Amazon Reviews Service
+  api_gateway:   
     build:
       context: ./api
       dockerfile: Dockerfile
@@ -9,21 +9,21 @@ services:
     container_name: api_gateway_container
     ports:
       - "8000:8000"
-    environment:
-      - MARKET_PERF_HOST=market_performance_container
+    # environment:
+    #   - MARKET_PERF_HOST=market_performance_container
     networks:
       - microservices
 
-  market_performance:
-    build:
-      context: ./app/microservices/market-performance
-      dockerfile: Dockerfile
-    image: market_performance
-    container_name: market_performance_container
-    ports:
-      - "50053:50053"
-    networks:
-      - microservices
+  # market_performance:
+  #   build:
+  #     context: ./app/microservices/market-performance
+  #     dockerfile: Dockerfile
+  #   image: market_performance
+  #   container_name: market_performance_container
+  #   ports:
+  #     - "50053:50053"
+  #   networks:
+  #     - microservices
 
   question_analysis:
     build:
@@ -35,7 +35,18 @@ services:
       - "50055:50055"
     networks:
       - microservices
-      
+
+  market_analysis:
+    build:
+      context: ./app/microservices/market-analysis
+      dockerfile: Dockerfile
+    image: market_analysis
+    container_name: market_analysis_container
+    ports:
+      - "50053:50053"
+    networks:
+      - microservices
+
   yelp_reviews:
     build:
       context: ./app/microservices/yelp-reviews
@@ -60,7 +71,8 @@ services:
     depends_on:
       - api_gateway
       - yelp_reviews
-      - market_performance
+      - market_analysis
+      #- market_performance
       - question_analysis
     networks:
       - microservices
