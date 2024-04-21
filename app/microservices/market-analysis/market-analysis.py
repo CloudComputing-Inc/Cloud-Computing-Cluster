@@ -87,11 +87,27 @@ def api_docs():
 def get_metadata():
     category = request.args.get('category')
     brand = request.args.get('brand', None)
-    min_price = request.args.get('minPrice', type=float)
-    max_price = request.args.get('maxPrice', type=float)
+    min_price = request.args.get('minPrice')
+    max_price = request.args.get('maxPrice')
+
+    # Use main_cat instead of category, based on your MongoDB objects
+    query = {'main_cat': category}
+    
+    # Add brand to query if provided
+    if brand:
+        query['brand'] = brand
+
+    # Modify the price filter to handle string values
+    if min_price:
+        min_price = float(min_price)
+        # Convert string price to number before comparison
+        query['price'] = {'$gte': f"${min_price:.2f}"}
+    if max_price:
+        max_price = float(max_price)
+        # Ensure the price field exists in the query before updating it
+        query.setdefault('price', {})['$lte'] = f"${max_price:.2f}"
 
     cluster_connection_string = get_cluster_connection_string(category)
-    # Check if the cluster connection string is valid (assumes get_cluster_connection_string returns None if not valid)
     if not cluster_connection_string:
         return jsonify({"error": "Category not found or not supported."}), 404
 
@@ -99,18 +115,8 @@ def get_metadata():
     db = client['amazon_metadata']
     collection = db['metadata']
     
-    query = {"category": category}  # Assuming category field is correct; adjust if different in your schema
-    if brand:
-        query['brand'] = brand
-    if min_price is not None or max_price is not None:
-        query['price'] = {}
-        if min_price is not None:
-            query['price']['$gte'] = min_price
-        if max_price is not None:
-            query['price']['$lte'] = max_price
-    
-    products = collection.find(query, {'_id': 0, 'title': 1, 'brand': 1, 'price': 1})  # Projection to exclude '_id'
-    result = list(products)  # Convert cursor to list directly
+    products = collection.find(query, {'_id': 0, 'title': 1, 'brand': 1, 'price': 1})
+    result = list(products)
     return jsonify(result)
 
 @app.route('/categories', methods=['GET'])
