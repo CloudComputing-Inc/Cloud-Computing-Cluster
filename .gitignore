@@ -5,8 +5,6 @@ amazonreviews_exploratory.ipynb
 .ipynb_checkpoints
 .DS_store
 venv
-market_performance_pb2_grpc.py
-market_performance_pb2.py
 yelp_dataset/
 Pipfile
 Pipfile.lock

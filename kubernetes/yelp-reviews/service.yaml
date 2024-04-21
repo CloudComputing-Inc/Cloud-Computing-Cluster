@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: yelp-reviews-svc
+  labels:
+    app: yelp-reviews
+spec:
+  selector:
+    app: yelp-reviews
+  ports:
+    - protocol: TCP
+      port: 80  # The port the service is exposed on within the cluster
+      targetPort: 5005  # The port the container is listening on
+  type: ClusterIP
