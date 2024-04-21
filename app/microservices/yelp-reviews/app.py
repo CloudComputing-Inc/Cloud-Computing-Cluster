@@ -3,8 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_swagger_ui import get_swaggerui_blueprint
 import requests
 import os
+import yaml
 from urllib.parse import quote  
 from sqlalchemy.engine import reflection
+
 
 
 
@@ -30,7 +32,7 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
 db = SQLAlchemy(app)
 
 # Swagger UI configuration
-SWAGGER_URL = ''  # URL for exposing Swagger UI (without trailing '/')
+SWAGGER_URL = '/api'  # URL for exposing Swagger UI (without trailing '/')
 API_URL = './static/swagger.yaml'  # Our API url (can of course be a local resource)
 
 swaggerui_blueprint = get_swaggerui_blueprint(
@@ -71,6 +73,16 @@ class Business(db.Model):
             'review_count': self.review_count,
             'is_open': self.is_open
         }
+
+
+@app.route('/', methods=['GET'])
+def api_docs():
+    # Load the YAML file
+    with open(os.path.join(app.root_path, 'static', 'swagger.yaml'), 'r') as yaml_file:
+        swagger_yaml_content = yaml.safe_load(yaml_file)
+
+    # Convert YAML content to JSON and return as JSON response
+    return jsonify(swagger_yaml_content)
 
 @app.route('/static/swagger.yaml')
 def swagger_yaml():

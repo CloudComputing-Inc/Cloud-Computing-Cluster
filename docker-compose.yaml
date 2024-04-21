@@ -68,12 +68,12 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./tls.crt:/etc/nginx/tls.crt
       - ./tls.key:/etc/nginx/tls.key
+      - ./static:/usr/share/nginx/swagger
     depends_on:
       - api_gateway
       - yelp_reviews
       - market_analysis
-      #- market_performance
-      - question_analysis
+      # - question_analysis
     networks:
       - microservices
 

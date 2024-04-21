@@ -3,3 +3,4 @@ requests
 Flask-SQLAlchemy
 psycopg2-binary
 flask-swagger-ui
+pyyaml

@@ -2,12 +2,14 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_swagger_ui import get_swaggerui_blueprint
 from pymongo import MongoClient
 import re  # Regular expression operations
+import os
+import yaml
 from concurrent import futures
 
 app = Flask(__name__)
 
 # Swagger UI configuration
-SWAGGER_URL = ''  # URL for exposing Swagger UI (without trailing '/')
+SWAGGER_URL = '/api'  # URL for exposing Swagger UI (without trailing '/')
 API_URL = './static/swagger.yml'  # Our API url (can of course be a local resource)
 
 swaggerui_blueprint = get_swaggerui_blueprint(
@@ -71,6 +73,15 @@ def get_cluster_connection_string(category):
     }
     # Logic to select the correct cluster based on category
     return clusters["cluster1"]  # Simplified example
+
+@app.route('/', methods=['GET'])
+def api_docs():
+    # Load the YAML file
+    with open(os.path.join(app.root_path, 'static', 'swagger.yaml'), 'r') as yaml_file:
+        swagger_yaml_content = yaml.safe_load(yaml_file)
+
+    # Convert YAML content to JSON and return as JSON response
+    return jsonify(swagger_yaml_content)
 
 @app.route('/metadata', methods=['GET'])
 def get_metadata():
