@@ -39,7 +39,8 @@ And then:
 4. Build and push docker images
 
 `./scripts/gcp_publish.sh`
-5. Apply deloyment configurations:
+
+5. Apply deployment configurations:
 
 `./scripts/gcp_apply_kubernetes.sh`
 
