@@ -17,6 +17,13 @@ spec:
       containers:
         - name: yelp-reviews
           image: gcr.io/cloudcomputinginc/yelp_reviews:latest  # path to image in GCR
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "200m"
           ports:
             - containerPort: 5005
       imagePullSecrets:
