@@ -10,7 +10,7 @@ Install docker and run the script: \
 `./scripts/run.sh` 
 
 In case of permission denied, run:
-`chmod +x ~/cn-group03/scripts/run.sh`
+`chmod +x ~/cn-group03/scripts/*`
 
 ### Phase 4
 1. Create new project in GCP called 'test-project-tp1'
@@ -26,6 +26,23 @@ And then:
 
 `./scripts/deploy.sh`
 
+### Discussion
+1. `chmod +x ~/cn-group03/scripts/*`
+2. Delete cluster in GCP and GCR(Google Container Registry) and kubernetes allocated resources:
+
+`./scripts/gcp_clean.sh`
+
+3. Create service acc. and cluster and secrets:
+   
+`./scripts/gcp_configure.sh`
+
+4. Build and push docker images
+
+`./scripts/gcp_publish.sh`
+
+5. Apply deployment configurations:
+
+`./scripts/gcp_apply_kubernetes.sh`
 
 
 

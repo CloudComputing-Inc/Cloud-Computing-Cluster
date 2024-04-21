@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yelp-reviews-deployment
+  labels:
+    app: yelp-reviews
+spec:
+  replicas: 1  # Adjust the number of replicas based on your traffic needs
+  selector:
+    matchLabels:
+      app: yelp-reviews
+  template:
+    metadata:
+      labels:
+        app: yelp-reviews
+    spec:
+      containers:
+        - name: yelp-reviews
+          image: gcr.io/cloudcomputinginc/yelp_reviews:latest  # path to image in GCR
+          ports:
+            - containerPort: 5005
+      imagePullSecrets:
+        - name: gcr-io
+          # Environment variables, if needed, go here
+          # env:
+          # - name: ENV_VAR_NAME
+          #   value: "value"

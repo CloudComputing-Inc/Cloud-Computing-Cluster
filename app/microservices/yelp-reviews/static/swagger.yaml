@@ -1,0 +1,161 @@
+openapi: 3.0.0
+info:
+  title: Business API
+  description: API for getting business information.
+  version: 1.0.0
+
+
+
+paths:
+  /states:
+    get:
+      summary: List all unique states
+      operationId: listStates
+      responses:
+        '200':
+          description: A list of states
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  states:
+                    type: array
+                    items:
+                      type: string
+
+  /cities:
+    get:
+      summary: List all unique cities
+      operationId: listCities
+      responses:
+        '200':
+          description: A list of cities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cities:
+                    type: array
+                    items:
+                      type: string
+
+  /businesses:
+    get:
+      summary: List businesses with pagination
+      operationId: listBusinesses
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number of the results to fetch
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 20
+          description: Number of results per page
+      responses:
+        '200':
+          description: A paginated list of businesses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  business_ids:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        id:
+                          type: string
+                  page:
+                    type: integer
+                  limit:
+                    type: integer
+
+  /businesses/{business_id}:
+    get:
+      summary: Retrieve a business by its ID
+      operationId: getBusiness
+      parameters:
+        - in: path
+          name: business_id
+          required: true
+          schema:
+            type: string
+          description: The ID of the business to retrieve
+      responses:
+        '200':
+          description: Details of a specific business
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Business'
+        '404':
+          description: Business not found
+
+  /businesses/top-rated:
+    get:
+      summary: List top-rated businesses optionally filtered by city and/or state
+      operationId: getTopRatedBusinesses
+      parameters:
+        - in: query
+          name: city
+          schema:
+            type: string
+          description: City to filter by
+        - in: query
+          name: state
+          schema:
+            type: string
+          description: State to filter by
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+          description: Number of results to return
+      responses:
+        '200':
+          description: A list of top-rated businesses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Business'
+
+components:
+  schemas:
+    Business:
+      type: object
+      properties:
+        business_id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postal_code:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        stars:
+          type: number
+        review_count:
+          type: integer
+        is_open:
+          type: integer

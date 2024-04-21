@@ -3,6 +3,7 @@ import market_performance_pb2
 import market_performance_pb2_grpc
 from pymongo import MongoClient
 from concurrent import futures
+from grpc_reflection.v1alpha import reflection
 
 # connect to MongoDB, change the user and passwordX  to reflect your own clusters  connection strings
 user = "br"
@@ -134,9 +135,14 @@ def serve():
     market_performance_pb2_grpc.add_MarketPerformanceServiceServicer_to_server(
         MarketPerformanceService(), server
     )
-    server.add_insecure_port('[::]:50051')
+    SERVICE_NAMES = (
+        market_performance_pb2.DESCRIPTOR.services_by_name['MarketPerformanceService'].full_name,
+        reflection.SERVICE_NAME,
+    )
+    reflection.enable_server_reflection(SERVICE_NAMES, server)
+    server.add_insecure_port('[::]:50053')
     server.start()
-    print("Server started at [::]:50051")
+    print("Server started at [::]:50053")
     server.wait_for_termination()
 
 if __name__ == '__main__':

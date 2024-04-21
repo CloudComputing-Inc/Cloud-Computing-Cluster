@@ -6,13 +6,12 @@ from flask import jsonify, request
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
 
-#from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, redirect, render_template, session, url_for
 
 from pymongo import MongoClient
 from flask import Flask, request, jsonify
-#from authlib.integrations.flask_oauth2 import ResourceProtector
+
 #from api.auth.validator import Auth0JWTBearerTokenValidator
 #from validator import Auth0JWTBearerTokenValidator
 import validator as validator
@@ -157,4 +156,4 @@ def get_top_brand():
     return jsonify(response)
     
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=8000)

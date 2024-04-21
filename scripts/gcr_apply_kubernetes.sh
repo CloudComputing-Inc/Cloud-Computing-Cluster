@@ -1,0 +1,1 @@
+for file in kubernetes/*/*.yaml; do     kubectl apply -f "$file"; done

@@ -5,6 +5,9 @@ kubectl delete ingress --all
 kubectl delete services --all
 kubectl delete deployments --all
 
-gcloud container images delete gcr.io/test-project-tp1/api-gateway --force-delete-tags
-gcloud container images delete gcr.io/test-project-tp1/market-performance --force-delete-tags
-#gcloud container clusters delete cluster-amazon-data --zone europe-west4-a
+gcloud container images delete gcr.io/cloudcomputinginc/api_gateway --force-delete-tags
+gcloud container images delete gcr.io/cloudcomputinginc/market_analysis --force-delete-tags
+gcloud container images delete gcr.io/cloudcomputinginc/market_performance --force-delete-tags
+gcloud container images delete gcr.io/cloudcomputinginc/question_analysis --force-delete-tags
+gcloud container images delete gcr.io/cloudcomputinginc/yelp_reviews --force-delete-tags
+gcloud container clusters delete cluster-amazon-data --zone europe-west4-a

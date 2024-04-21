@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: market-analysis-deployment
+  labels:
+    app: market-analysis
+spec:
+  replicas: 1  # Adjust the number of replicas based on your traffic needs
+  selector:
+    matchLabels:
+      app: market-analysis
+  template:
+    metadata:
+      labels:
+        app: market-analysis
+    spec:
+      containers:
+        - name: market-analysis
+          image: gcr.io/cloudcomputinginc/market_analysis:latest  # path to image in GCR
+          ports:
+            - containerPort: 50053
+      imagePullSecrets:
+        - name: gcr-io

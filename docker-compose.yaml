@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-  api_gateway:   # This is the Amazon Reviews Service
+  api_gateway:   
     build:
       context: ./api
       dockerfile: Dockerfile
@@ -9,31 +9,44 @@ services:
     container_name: api_gateway_container
     ports:
       - "8000:8000"
-    environment:
-      - MARKET_PERF_HOST=market_performance_container
+    # environment:
+    #   - MARKET_PERF_HOST=market_performance_container
     networks:
       - microservices
 
-  market_performance:
-    build:
-      context: ./app/microservices/market-performance
-      dockerfile: Dockerfile
-    image: market_performance
-    container_name: market_performance_container
-    ports:
-      - "50053:50053"
-    networks:
-      - microservices
+  # market_performance:
+  #   build:
+  #     context: ./app/microservices/market-performance
+  #     dockerfile: Dockerfile
+  #   image: market_performance
+  #   container_name: market_performance_container
+  #   ports:
+  #     - "50053:50053"
+  #   networks:
+  #     - microservices
 
   question_analysis:
     build:
-      context: ./app/microservices/question_analysis
+      context: ./app/microservices/question-analysis
       dockerfile: Dockerfile
     image: question_analysis
     container_name: question_analysis_container
     ports:
       - "50055:50055"
-      
+    networks:
+      - microservices
+
+  market_analysis:
+    build:
+      context: ./app/microservices/market-analysis
+      dockerfile: Dockerfile
+    image: market_analysis
+    container_name: market_analysis_container
+    ports:
+      - "50053:50053"
+    networks:
+      - microservices
+
   yelp_reviews:
     build:
       context: ./app/microservices/yelp-reviews
@@ -41,7 +54,7 @@ services:
     image: yelp_reviews
     container_name: yelp_reviews_container
     ports:
-      - "5001:5000"
+      - "5005:5005"
     networks:
       - microservices
 
@@ -50,11 +63,17 @@ services:
     container_name: nginx_gateway_container
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./tls.crt:/etc/nginx/tls.crt
+      - ./tls.key:/etc/nginx/tls.key
+      - ./static:/usr/share/nginx/swagger
     depends_on:
       - api_gateway
       - yelp_reviews
+      - market_analysis
+      # - question_analysis
     networks:
       - microservices
 

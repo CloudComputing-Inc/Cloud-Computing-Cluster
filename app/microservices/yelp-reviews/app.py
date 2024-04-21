@@ -1,8 +1,13 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
+from flask_swagger_ui import get_swaggerui_blueprint
 import requests
 import os
+import yaml
 from urllib.parse import quote  
+from sqlalchemy.engine import reflection
+
+
 
 
 app = Flask(__name__)
@@ -25,6 +30,20 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     }
 }
 db = SQLAlchemy(app)
+
+# Swagger UI configuration
+SWAGGER_URL = '/api'  # URL for exposing Swagger UI (without trailing '/')
+API_URL = './static/swagger.yaml'  # Our API url (can of course be a local resource)
+
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={  # Swagger UI config overrides
+        'app_name': "Flask Business API"
+    },
+)
+
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
 class Business(db.Model):
     __tablename__ = 'business'
@@ -55,6 +74,50 @@ class Business(db.Model):
             'is_open': self.is_open
         }
 
+
+@app.route('/', methods=['GET'])
+def api_docs():
+    # Load the YAML file
+    with open(os.path.join(app.root_path, 'static', 'swagger.yaml'), 'r') as yaml_file:
+        swagger_yaml_content = yaml.safe_load(yaml_file)
+
+    # Convert YAML content to JSON and return as JSON response
+    return jsonify(swagger_yaml_content)
+
+@app.route('/static/swagger.yaml')
+def swagger_yaml():
+    print("Sending swagger.yaml")
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'swagger.yaml', as_attachment=False, mimetype='application/x-yaml')
+
+@app.route('/states', methods=['GET'])
+def list_states():
+    states = db.session.query(Business.state).distinct().all()
+    state_list = [state[0] for state in states]  # Unpack tuple results into a list
+    return jsonify({'states': state_list})
+
+@app.route('/cities', methods=['GET'])
+def list_cities():
+    cities = db.session.query(Business.city).distinct().all()
+    city_list = [city[0] for city in cities]  # Unpack tuple results into a list
+    return jsonify({'cities': city_list})
+
+@app.route('/businesses', methods=['GET'])
+def list_business_ids():
+    page = request.args.get('page', 1, type=int)
+    limit = request.args.get('limit', 20, type=int)
+
+    offset = (page - 1) * limit
+    
+    business_info = Business.query.with_entities(Business.name, Business.business_id).order_by(Business.name).limit(limit).offset(offset).all()
+    
+    results = [{'name': info[0], 'id': info[1]} for info in business_info]
+    
+    return jsonify({
+        'business_ids': results,
+        'page': page,
+        'limit': limit
+    })
+
 @app.route('/businesses/<business_id>', methods=['GET'])
 def get_business(business_id):
     business = Business.query.get(business_id)
@@ -66,18 +129,27 @@ def get_business(business_id):
 @app.route('/businesses/top-rated', methods=['GET'])
 def get_top_rated_businesses():
     city = request.args.get('city')
-    limit = request.args.get('limit', 10, type=int)  # Default is 10, can be changed by the user
+    state = request.args.get('state')
+    limit = request.args.get('limit', 10, type=int)
 
-    if not city:
-        return jsonify({'error': 'City is required'}), 400
+    query = Business.query
 
-    top_rated = Business.query.filter(Business.city == city).order_by(
-        Business.stars.desc(), Business.review_count.desc()
-    ).limit(limit).all()
+    if city:
+        query = query.filter(Business.city == city)
+    if state:
+        query = query.filter(Business.state == state)
+
+    top_rated = query.order_by(Business.stars.desc(), Business.review_count.desc()).limit(limit).all()
 
     return jsonify([business.to_dict() for business in top_rated])
 
 
+def print_database_tables():
+    # Create an inspector object to inspect the database
+    inspector = reflection.Inspector.from_engine(db.engine)
+    # Retrieve and print the list of table names
+    tables = inspector.get_table_names()
+    print("Tables in the database:", tables)
+
 if __name__ == '__main__':
-    db.create_all()
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5005)
