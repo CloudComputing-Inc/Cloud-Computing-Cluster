@@ -26,6 +26,22 @@ And then:
 
 `./scripts/deploy.sh`
 
+### Discussion
+1. `chmod +x ~/cn-group03/scripts/*`
+2. Delete cluster in GCP and GCR(Google Container Registry) and kubernetes allocated resources:
+
+`./scripts/gcp_clean.sh`
+
+3. Create service acc. and cluster and secrets:
+   
+`./scripts/gcp_configure.sh`
+
+4. Build and push docker images
+
+`./scripts/gcp_publish.sh`
+5. Apply deloyment configurations:
+
+`./scripts/gcp_apply_kubernetes.sh`
 
 
 
