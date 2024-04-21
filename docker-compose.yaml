@@ -25,16 +25,16 @@ services:
   #   networks:
   #     - microservices
 
-  question_analysis:
-    build:
-      context: ./app/microservices/question-analysis
-      dockerfile: Dockerfile
-    image: question_analysis
-    container_name: question_analysis_container
-    ports:
-      - "50055:50055"
-    networks:
-      - microservices
+  # question_analysis:
+  #   build:
+  #     context: ./app/microservices/question-analysis
+  #     dockerfile: Dockerfile
+  #   image: question_analysis
+  #   container_name: question_analysis_container
+  #   ports:
+  #     - "50055:50055"
+  #   networks:
+  #     - microservices
 
   market_analysis:
     build:
@@ -58,6 +58,17 @@ services:
     networks:
       - microservices
 
+  question_analysis:
+    build:
+      context: ./app/microservices/question-analysis
+      dockerfile: Dockerfile
+    image: question_analysis
+    container_name: question_analysis_container
+    ports:
+      - "8080:8080"
+    networks:
+      - microservices
+
   nginx_gateway:
     image: nginx:latest
     container_name: nginx_gateway_container
@@ -73,7 +84,7 @@ services:
       - api_gateway
       - yelp_reviews
       - market_analysis
-      # - question_analysis
+      - question_analysis
     networks:
       - microservices
 

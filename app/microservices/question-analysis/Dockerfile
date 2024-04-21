@@ -1,9 +1,9 @@
 FROM python
 
-RUN mkdir /service
-COPY ./  /service/
+WORKDIR /app
 
-WORKDIR /service
+COPY ./  /app/
+
 
 RUN pip install -r requirements.txt
 

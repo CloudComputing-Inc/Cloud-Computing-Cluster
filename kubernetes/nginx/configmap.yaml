@@ -18,6 +18,10 @@ data:
         upstream market_analysis {
             server market-analysis-svc:50053;
         }
+        
+        upstream question_analysis {
+        server question-analysis-svc:8080;
+        }
 
         server {
             listen 80;
@@ -31,6 +35,10 @@ data:
             }
             location /market/ {
                 proxy_pass http://market_analysis/;
+            }
+
+            location /qa/ {
+            proxy_pass http://question_analysis/;
             }
         }
     }

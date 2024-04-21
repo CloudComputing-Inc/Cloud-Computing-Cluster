@@ -6,7 +6,7 @@ import question_analysis_pb2_grcp
 from pymongo import MongoClient
 from flask import Flask, request, jsonify
 from flask_swagger_ui import get_swaggerui_blueprint
-from authlib.integrations.flask_oauth2 import ResourceProtector
+# from authlib.integrations.flask_oauth2 import ResourceProtector
 import os
 import yaml
 import re
@@ -31,7 +31,7 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 user = "exampleuser"
 password = "Ra2lMTHV3KmzBaGM"
 up = user + ":" + password
-client = MongoClient("mongodb+srv://"+up+"@single_qna.mongodb.net/Qna?retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://"+up+"@singleqna.me1c1ax.mongodb.net/Qna?retryWrites=true&w=majority")
 db = client["database"]
 collection = db["qna"]
 

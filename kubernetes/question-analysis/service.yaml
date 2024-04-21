@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: question-analysis-svc
+  labels:
+    app: question-analysis
+spec:
+  selector:
+    app: question-analysis
+  ports:
+    - protocol: TCP
+      port: 8080  # The port the service is exposed on within the cluster
+      targetPort: 8080  # The port the container is listening on
+  type: ClusterIP
