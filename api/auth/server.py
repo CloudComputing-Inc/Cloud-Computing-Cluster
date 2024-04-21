@@ -69,6 +69,11 @@ validator = Auth0JWTBearerTokenValidator(
 )
 require_auth.register_token_validator(validator)
 '''
+@app.route("/")
+def home():
+    return render_template("home.html", session=session.get('user'), pretty=json.dumps(session.get('user'), indent=4))
+
+
 @app.route("/login")
 def login():
     return oauth.auth0.authorize_redirect(redirect_uri=url_for("callback", _external=True))
@@ -93,11 +98,6 @@ def logout():
             quote_via=quote_plus,
         )
     )
-
-@app.route("/")
-def home():
-    return render_template("home.html", session=session.get('user'), pretty=json.dumps(session.get('user'), indent=4))
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=env.get("PORT", 50005))
