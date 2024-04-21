@@ -15,6 +15,13 @@ spec:
       containers:
       - name: nginx-gateway
         image: nginx:latest
+        resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "200m"
         ports:
         - containerPort: 80
         volumeMounts:
