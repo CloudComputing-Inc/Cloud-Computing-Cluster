@@ -4,14 +4,26 @@
 
 
 # Running 
+### Discussion
+1. `chmod +x ~/cn-group03/scripts/*`
+2. Delete cluster in GCP and GCR(Google Container Registry) and kubernetes allocated resources:
+
+`./scripts/gcp_clean.sh`
+
+3. Create service acc. and cluster and secrets:
+`./scripts/cluster_create.sh`
+
+`./scripts/gcp_configure.sh`
+
+4. Build and push docker images
+
+`./scripts/gcp_publish.sh`
+
+5. Apply deployment configurations:
+
+`./scripts/gcp_apply_kubernetes.sh`
+
 -----------------------------------------------------
-### Phase 3
-Install docker and run the script: \
-`./scripts/run.sh` 
-
-In case of permission denied, run:
-`chmod +x ~/cn-group03/scripts/*`
-
 ### Phase 4
 1. Create new project in GCP called 'test-project-tp1'
 2. Delete cluster in GCP and GCR(Google Container Registry) and kubernetes allocated resources:
@@ -25,24 +37,17 @@ In case of permission denied, run:
 And then:
 
 `./scripts/deploy.sh`
+-----------------------------------------------------
+### Phase 3
+Install docker and run the script: \
+`./scripts/run.sh` 
 
-### Discussion
-1. `chmod +x ~/cn-group03/scripts/*`
-2. Delete cluster in GCP and GCR(Google Container Registry) and kubernetes allocated resources:
+In case of permission denied, run:
+`chmod +x ~/cn-group03/scripts/*`
 
-`./scripts/gcp_clean.sh`
 
-3. Create service acc. and cluster and secrets:
-   
-`./scripts/gcp_configure.sh`
 
-4. Build and push docker images
 
-`./scripts/gcp_publish.sh`
-
-5. Apply deployment configurations:
-
-`./scripts/gcp_apply_kubernetes.sh`
 
 
 
@@ -59,7 +64,7 @@ And then:
 ## Microservices
  | Name of microservice                                  | Number  | Responsible            
  |:----------------------------------------------------- | :------ |:---------------
- | API Gateway and Market-Performance                    | fc55313 | Beatriz Rosa     
+ | API Gateway and Market-Analysis                       | fc55313 | Beatriz Rosa     
  | Sentiment Analysis                                    | fc60566 | Christopher Anaya   
  | Yelp Category Recommendation                          | fc62761 | José Ricardo Ribeiro 
  | Question-Analysis                                     | fc63327 | Ayla Stehling
