@@ -8,3 +8,4 @@ connexion[flask,uvicorn,swagger-ui] >= 0.0.0
 flask_httpauth >= 0.0.0
 flask_cors >= 0.0.0
 authlib >= 0.15.3
+prometheus_client

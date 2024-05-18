@@ -1,8 +1,10 @@
+import logging
 from functools import wraps
 import connexion
 from flask_cors import CORS
 from flask import jsonify, request
-
+from prometheus_client import start_http_server, Summary, Counter, generate_latest
+from prometheus_client.core import CollectorRegistry
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
 
@@ -14,61 +16,15 @@ from flask import Flask, request, jsonify
 
 #from api.auth.validator import Auth0JWTBearerTokenValidator
 #from validator import Auth0JWTBearerTokenValidator
+
 import validator as validator
-'''
-ENV_FILE = find_dotenv()
-if ENV_FILE:
-    load_dotenv(ENV_FILE)
 
-app = Flask(__name__)
-app.secret_key = env.get("APP_SECRET_KEY") #e61de153fb483642f1ca67954343cd05aef81184c290a3b8201a1136adfe8379
+# Configure logging
+logging.basicConfig(level=logging.INFO)
 
-oauth = OAuth(app)
-
-#TODO urls
-
-oauth.register(
-    "auth0",
-    client_id=env.get("AUTH0_CLIENT_ID"),
-    client_secret=env.get("AUTH0_CLIENT_SECRET"),
-    client_kwargs={
-        "scope": "openid profile email",
-    },
-    server_metadata_url=f'https://{env.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
-)
-
-# Initialize ResourceProtector and Auth0JWTBearerTokenValidator
-require_auth = ResourceProtector()
-validator = Auth0JWTBearerTokenValidator(
-    env.get("AUTH0_DOMAIN"),
-    "https:\\amazon-reviews.net" 
-)
-require_auth.register_token_validator(validator)
-
-@app.route("/login")
-def login():
-    return oauth.auth0.authorize_redirect(redirect_uri=url_for("callback", _external=True))
-
-@app.route("/callback", methods=["GET", "POST"])
-def callback():
-    token = oauth.auth0.authorize_access_token()
-    session["user"] = token
-    return redirect("/")
-
-@app.route("/logout")
-def logout():
-    session.clear()
-    return redirect(
-        "https://" + env.get("AUTH0_DOMAIN")
-        + "/v2/logout?"
-        + urlencode(
-            {
-                "returnTo": url_for("home", _external=True),
-                "client_id": env.get("AUTH0_CLIENT_ID"),
-            },
-            quote_via=quote_plus,
-        )
-    )'''
+# Create Prometheus metrics
+REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
+REQUEST_COUNT = Counter('request_count', 'Total count of requests')
 
 # Define the authenticate decorator
 def authenticate(f):
@@ -155,5 +111,24 @@ def get_top_brand():
     response = stub.GetTopBrand(market_performance_pb2.GetTopBrandRequest(**request_data))
     return jsonify(response)
     
+
+# Expose metrics endpoint
+@app.app.route('/metrics')
+def metrics():
+    registry = CollectorRegistry()
+    return generate_latest(registry)
+
+# Example endpoint with Prometheus metrics
+@app.app.route('/process')
+@REQUEST_TIME.time()
+@REQUEST_COUNT.count_exceptions()
+def process_request():
+    """A dummy function that takes some time."""
+    time.sleep(random.random())
+    return "Processed"
+
+
 if __name__ == "__main__":
+        # Start up the server to expose the metrics.
+    start_http_server(9090)
     app.run(host='0.0.0.0', port=8000)

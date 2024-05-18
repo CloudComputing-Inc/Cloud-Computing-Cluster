@@ -11,4 +11,5 @@ spec:
     - protocol: TCP
       port: 50053  # The port the service is exposed on within the cluster
       targetPort: 50053  # The port the container is listening on
+      name: http
   type: ClusterIP
