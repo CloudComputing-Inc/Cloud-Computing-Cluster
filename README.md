@@ -11,6 +11,7 @@
 `./scripts/gcp_clean.sh`
 
 3. Create service acc. and cluster and secrets:
+   
 `./scripts/cluster_create.sh`
 
 `./scripts/gcp_configure.sh`
@@ -37,6 +38,7 @@
 And then:
 
 `./scripts/deploy.sh`
+
 -----------------------------------------------------
 ### Phase 3
 Install docker and run the script: \
