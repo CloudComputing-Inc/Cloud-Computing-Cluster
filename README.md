@@ -18,11 +18,11 @@
 
 4. Build and push docker images
 
-`./scripts/gcp_publish.sh`
+`./scripts/gcr_publish.sh`
 
 5. Apply deployment configurations:
 
-`./scripts/gcp_apply_kubernetes.sh`
+`./scripts/gcr_apply_kubernetes.sh`
 
 -----------------------------------------------------
 ### Phase 4
