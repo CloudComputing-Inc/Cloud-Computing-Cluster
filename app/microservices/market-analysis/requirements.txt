@@ -6,3 +6,4 @@ Flask
 psycopg2-binary
 flask-swagger-ui
 pyyaml
+locust
