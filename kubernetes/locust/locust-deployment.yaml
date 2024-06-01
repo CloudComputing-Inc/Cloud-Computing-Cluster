@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: locust
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: locust
+  template:
+    metadata:
+      labels:
+        app: locust
+    spec:
+      containers:
+      - name: locust
+        image: locustio/locust
+        args: ["-f", "/mnt/locust/locust_marketAnalysis.py", "--host=http://34.91.28.188"]
+        volumeMounts:
+        - name: locust-scripts
+          mountPath: /mnt/locust
+      volumes:
+      - name: locust-scripts
+        configMap:
+          name: locust-scripts

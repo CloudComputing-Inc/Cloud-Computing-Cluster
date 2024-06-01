@@ -90,34 +90,44 @@ def get_metadata():
     min_price = request.args.get('minPrice')
     max_price = request.args.get('maxPrice')
 
-    # Use main_cat instead of category, based on your MongoDB objects
-    query = {'main_cat': category}
-    
-    # Add brand to query if provided
-    if brand:
-        query['brand'] = brand
+    if not category:
+        return jsonify({"error": "Category parameter is required."}), 400
 
-    # Modify the price filter to handle string values
-    if min_price:
-        min_price = float(min_price)
-        # Convert string price to number before comparison
-        query['price'] = {'$gte': f"${min_price:.2f}"}
-    if max_price:
-        max_price = float(max_price)
-        # Ensure the price field exists in the query before updating it
-        query.setdefault('price', {})['$lte'] = f"${max_price:.2f}"
+    try:
+        cluster_connection_string = get_cluster_connection_string(category)
+        if not cluster_connection_string:
+            return jsonify({"error": "Category not found or not supported."}), 404
 
-    cluster_connection_string = get_cluster_connection_string(category)
-    if not cluster_connection_string:
-        return jsonify({"error": "Category not found or not supported."}), 404
+        # Use main_cat instead of category, based on your MongoDB objects
+        query = {'main_cat': category}
+        
+        # Add brand to query if provided
+        if brand:
+            query['brand'] = brand
 
-    client = MongoClient(cluster_connection_string)
-    db = client['amazon_metadata']
-    collection = db['metadata']
-    
-    products = collection.find(query, {'_id': 0, 'title': 1, 'brand': 1, 'price': 1})
-    result = list(products)
-    return jsonify(result)
+        # Modify the price filter to handle string values
+        if min_price:
+            min_price = float(min_price)
+            # Convert string price to number before comparison
+            query['price'] = {'$gte': f"${min_price:.2f}"}
+        if max_price:
+            max_price = float(max_price)
+            # Ensure the price field exists in the query before updating it
+            query.setdefault('price', {})['$lte'] = f"${max_price:.2f}"
+
+        client = MongoClient(cluster_connection_string)
+        db = client['amazon_metadata']
+        collection = db['metadata']
+        
+        products = collection.find(query, {'_id': 0, 'title': 1, 'brand': 1, 'price': 1})
+        result = list(products)
+        return jsonify(result)
+    except ValueError:
+        return jsonify({"error": "Invalid price format."}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 
 @app.route('/categories', methods=['GET'])
 def get_main_categories():
