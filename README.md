@@ -24,6 +24,10 @@
 
 `./scripts/gcr_apply_kubernetes.sh`
 
+6. Run tests:
+
+`./scripts/test.sh`
+
 -----------------------------------------------------
 ### Phase 4
 1. Create new project in GCP called 'test-project-tp1'
