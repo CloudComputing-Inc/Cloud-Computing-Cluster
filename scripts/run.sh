@@ -15,12 +15,12 @@ chmod +x ~/cn-group03/scripts/*
 
 #./scripts/gcp_clean.sh
 
-./scripts/cluster_create.sh
+./cluster_create.sh
 
-./scripts/gcp_configure.sh
+./gcp_configure.sh
 
-./scripts/gcr_publish.sh
+./gcr_publish.sh
 
-./scripts/gcr_apply_kubernetes.sh
+./gcr_apply_kubernetes.sh
 
-./scripts/test.sh
+./test.sh

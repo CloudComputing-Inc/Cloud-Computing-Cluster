@@ -5,22 +5,22 @@ BASE_URL = "http://34.91.28.188"  #  LoadBalancer IP
 def test_get_categories():
     response = requests.get(f"{BASE_URL}/market/categories")
     assert response.status_code == 200
-    assert response.json()  # Check if the response is not empty
+    assert response.json()  
 
 def test_get_metadata():
     response = requests.get(f"{BASE_URL}/market/metadata?category=Books&minPrice=2&maxPrice=50")
     assert response.status_code == 200
-    assert response.json()  # Check if the response list is not empty
+    assert response.json()  
 
 def test_get_top_brand():
     response = requests.get(f"{BASE_URL}/market/top-brand?category=Software")
     assert response.status_code == 200
-    assert response.json()  # Check if the response is not empty
+    assert response.json()  
 
 def test_get_top_products():
     response = requests.get(f"{BASE_URL}/market/top-products?category=Books")
     assert response.status_code == 200
-    assert response.json()  # Check if the response list is not empty
+    assert response.json()  
 
 # Error scenarios
 def test_get_metadata_missing_category():
