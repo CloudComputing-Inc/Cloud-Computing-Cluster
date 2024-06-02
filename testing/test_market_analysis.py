@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = "http://34.91.28.188"  #  LoadBalancer IP
+BASE_URL = "http://35.204.90.119"
 
 def test_get_categories():
     response = requests.get(f"{BASE_URL}/market/categories")
