@@ -1,5 +1,7 @@
-cd ~/cn-group03/testing
 
+
+cd ~/cn-group03/testing
+pip install -r requirements.txt
 ### Unit tests
 
 #!/bin/bash
@@ -26,7 +28,29 @@ pytest $TEST_FILE
 
 
 
-### Security
+### Security Tests
+#!/bin/bash
+
+# Check if Bandit is installed
+if ! command -v bandit &> /dev/null; then
+    echo "Bandit could not be found. Please install it using 'pip install bandit'."
+    exit 1
+fi
+
+# Run Bandit on the market-analysis project
+echo "Running Bandit for static code analysis..."
+bandit -r ../app/microservices/market-analysis/ -f html -o bandit_report.html
+
+# Output the report
+if [ -f bandit_report.html ]; then
+    echo "Bandit report generated: bandit_report.html"
+    cat bandit_report.html
+else
+    echo "Failed to generate Bandit report."
+    exit 1
+fi
+
+
 
 
 

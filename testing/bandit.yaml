@@ -1,0 +1,6 @@
+# Custom configuration for Bandit
+profiles:
+  myprofile:
+    include:
+      - B101  # Example: assert statement
+      - B102  # Example: exec statement
