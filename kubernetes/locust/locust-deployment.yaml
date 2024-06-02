@@ -15,7 +15,7 @@ spec:
       containers:
       - name: locust
         image: locustio/locust
-        args: ["-f", "/mnt/locust/locust_marketAnalysis.py", "--host=http://34.91.28.188"]
+        args: ["-f", "/mnt/locust/locust_marketAnalysis.py", "--host=http://35.204.90.119"]
         volumeMounts:
         - name: locust-scripts
           mountPath: /mnt/locust
