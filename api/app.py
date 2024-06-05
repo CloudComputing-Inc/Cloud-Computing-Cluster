@@ -112,22 +112,6 @@ def get_top_brand():
     return jsonify(response)
     
 
-# Expose metrics endpoint
-@app.app.route('/metrics')
-def metrics():
-    registry = CollectorRegistry()
-    return generate_latest(registry)
-
-# Example endpoint with Prometheus metrics
-@app.app.route('/process')
-@REQUEST_TIME.time()
-@REQUEST_COUNT.count_exceptions()
-def process_request():
-    """A dummy function that takes some time."""
-    time.sleep(random.random())
-    return "Processed"
-
-
 if __name__ == "__main__":
         # Start up the server to expose the metrics.
     start_http_server(9090)

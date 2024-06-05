@@ -10,17 +10,41 @@ data:
       - job_name: 'prometheus'
         static_configs:
           - targets: ['localhost:9090']
-      - job_name: 'microservices'
+      - job_name: 'pushgateway'
+        static_configs:
+          - targets: ['pushgateway:9091']
+      - job_name: 'kubernetes-nodes'
         kubernetes_sd_configs:
-          - role: endpoints
+          - role: node
         relabel_configs:
-          - source_labels: [__meta_kubernetes_namespace]
+          - action: labelmap
+            regex: __meta_kubernetes_node_label_(.+)
+      - job_name: 'kubernetes-pods'
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - action: labelmap
+            regex: __meta_kubernetes_pod_label_(.+)
+        metric_relabel_configs:
+          - source_labels: [__name__]
+            action: drop
+            regex: 'container_(last_seen|labels|info|created)'
+      - job_name: 'market_analysis'
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_container_name]
             action: keep
-            regex: default
-          - source_labels: [__meta_kubernetes_service_name]
+            regex: market-analysis
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
             action: keep
-            regex: (api-gateway|market-analysis|nginx-gateway|question-analysis|yelp-reviews)
-          - source_labels: [__meta_kubernetes_pod_container_port_name]
-            action: keep
-            regex: http
-            
+            regex: true
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: (.+)
+          - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+            action: replace
+            target_label: __address__
+            regex: (.+):(?:\d+);(\d+)
+            replacement: $1:$2

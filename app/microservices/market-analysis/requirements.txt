@@ -6,3 +6,5 @@ Flask
 psycopg2-binary
 flask-swagger-ui
 pyyaml
+prometheus_client
+psutil

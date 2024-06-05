@@ -13,6 +13,10 @@ spec:
     metadata:
       labels:
         app: market-analysis
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: /metrics
+        prometheus.io/port: '50053'
     spec:
       containers:
         - name: market-analysis

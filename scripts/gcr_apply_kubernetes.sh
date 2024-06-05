@@ -7,7 +7,13 @@ PROMETHEUS_DIR=~/cn-group03/prometheus
 kubectl apply -f $PROMETHEUS_DIR/prometheus-config.yaml
 kubectl apply -f $PROMETHEUS_DIR/prometheus-deployment.yaml
 kubectl apply -f $PROMETHEUS_DIR/prometheus-service.yaml
+kubectl apply -f $PROMETHEUS_DIR/pushgateway.yaml
 kubectl apply -f $PROMETHEUS_DIR/grafana.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+# Ensure Prometheus and Pushgateway services are running
+kubectl rollout status deployment/prometheus-deployment
+kubectl rollout status deployment/pushgateway
 
 # Apply Locust configuration
 kubectl create configmap locust-scripts --from-file=kubernetes/locust/locust_marketAnalysis.py || kubectl create configmap locust-scripts --from-file=kubernetes/locust/locust_marketAnalysis.py --dry-run=client -o yaml | kubectl apply -f -

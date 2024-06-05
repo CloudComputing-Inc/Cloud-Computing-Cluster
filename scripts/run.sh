@@ -1,13 +1,13 @@
 chmod +x ~/cn-group03/scripts/*
 
-#./gcp_clean.sh
+#./scripts/gcp_clean.sh
 
-./cluster_create.sh
+./scripts/cluster_create.sh
 
-./gcp_configure.sh
+./scripts/gcp_configure.sh
 
-./gcr_publish.sh
+./scripts/gcr_publish.sh
 
-./gcr_apply_kubernetes.sh
+./scripts/gcr_apply_kubernetes.sh
 
-./test.sh
+./scripts/test.sh
