@@ -16,7 +16,7 @@ app = Flask(__name__)
 password_encoded = quote('vN`Y{N4H<7)g5BGb')
 
 # Dynamically build the connection string using the encoded password
-database_url = os.environ.get('DATABASE_URL', f'postgresql://postgres:{password_encoded}@34.107.119.237:5432/postgres')
+database_url = os.environ.get('DATABASE_URL', f'postgresql://postgres:{password_encoded}@34.159.70.188:5432/postgres')
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url

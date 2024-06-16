@@ -6,12 +6,13 @@ from urllib.parse import quote
 password_encoded = quote('vN`Y{N4H<7)g5BGb')
 
 # Connection string with URL-encoded password
-connection_string = f'postgresql://postgres:{password_encoded}@34.107.119.237:5432/postgres'
+connection_string = f'postgresql://postgres:{password_encoded}@34.159.70.188:5432/postgres'
+print("Connection string:", connection_string)
 engine = create_engine(connection_string, connect_args={
     'sslmode': 'require',
-    'sslrootcert': 'path/to/server-ca.pem',
-    'sslcert': 'path/to/client-cert.pem',
-    'sslkey': 'path/to/client-key.pem'
+    'sslrootcert': 'cert/server-ca.pem',
+    'sslcert': 'cert/client-cert.pem',
+    'sslkey': 'cert/client-key.pem'
 })
 
 try:
