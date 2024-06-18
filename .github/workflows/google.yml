@@ -23,6 +23,9 @@ jobs:
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY }}
 
+    - name: Enable GCP Services
+      run: gcloud services enable container
+
     - name: Create GKE Cluster
       run: |
         gcloud container clusters create cluster-amazon-data \
