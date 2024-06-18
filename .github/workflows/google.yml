@@ -17,11 +17,11 @@ jobs:
       uses: google-github-actions/setup-gcloud@v1
       with:
         version: 'latest'
-        project_id: ${{ secrets.PROJECT_ID }}
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
 
     - name: Authenticate to GCP
-      run: gcloud auth activate-service-account --key-file=${{ secrets.GCP_SA_KEY }}
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
 
     - name: Enable GCP Services
       run: gcloud services enable cloudapis.googleapis.com container.googleapis.com containerregistry.googleapis.com
@@ -50,11 +50,11 @@ jobs:
       uses: google-github-actions/setup-gcloud@v1
       with:
         version: 'latest'
-        project_id: ${{ secrets.PROJECT_ID }}
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
 
     - name: Authenticate to GCP
-      run: gcloud auth activate-service-account --key-file=${{ secrets.GCP_SA_KEY }}
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
 
     - name: Build and Push Docker Images
       run: |
