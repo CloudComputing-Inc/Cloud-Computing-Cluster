@@ -25,6 +25,11 @@ jobs:
 
     - name: Enable GCP Services
       run: gcloud services enable container
+    
+    - name: Install gke-gcloud-auth-plugin
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
 
     - name: Create GKE Cluster
       run: |
