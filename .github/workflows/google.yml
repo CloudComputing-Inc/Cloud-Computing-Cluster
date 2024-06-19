@@ -82,12 +82,6 @@ jobs:
         docker push gcr.io/${PROJECT_ID}/api-gateway
         docker push gcr.io/${PROJECT_ID}/market-performance
 
-    - name: Deploy to GKE
-      run: |
-        gcloud container clusters get-credentials cluster-amazon-data --zone europe-west4-a
-        kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
-        kubectl apply -f kubernetes/deploy.yaml
-
     - name: Configure Firewall and Apply Kubernetes Configs
       run: |
         CLUSTER_NAME=$(gcloud container clusters list --format="value(name)" --filter="zone:(europe-west4-a)")
