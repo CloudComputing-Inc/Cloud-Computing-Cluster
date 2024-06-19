@@ -59,8 +59,12 @@ jobs:
     - name: Get User Account
       id: get-user
       run: |
-        gcloud config get-value core/account 
-        echo "USER_ACCOUNT=$(gcloud config get-value core/account)" >> $GITHUB_ENV
+        USER_ACCOUNT=$(gcloud config get-value core/account)
+        echo "USER_ACCOUNT=$USER_ACCOUNT" >> $GITHUB_ENV
+        echo "Current authenticated account: $USER_ACCOUNT"
+
+    - name: Debug User Account
+      run: echo "User account is $USER_ACCOUNT"
 
     - name: Create ClusterRoleBinding
       run: |
