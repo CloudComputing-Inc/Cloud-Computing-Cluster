@@ -79,6 +79,12 @@ jobs:
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY }}
 
+    - name: Install kubectl
+      run: |
+        sudo apt-get update
+        apt-get install -y kubectl
+
+
     - name: Build and Push Docker Images
       run: |
         export PROJECT_ID=$(gcloud info --format='value(config.project)')
