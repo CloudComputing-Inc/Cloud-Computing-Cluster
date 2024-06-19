@@ -60,7 +60,7 @@ jobs:
       id: get-user
       run: |
         USER_ACCOUNT=$(gcloud config get-value core/account)
-        if [ -z "$USER_ACCOUNT" ]; then
+        if [ "$USER_ACCOUNT" = "***" ]; then
           SERVICE_ACCOUNT_EMAIL=${{ secrets.GCP_SA_EMAIL }}
           USER_ACCOUNT="$SERVICE_ACCOUNT_EMAIL"
         fi
