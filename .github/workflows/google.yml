@@ -35,7 +35,17 @@ jobs:
         sudo apt-get update && sudo apt-get install google-cloud-cli
         sudo apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin google-cloud-cli-gke-gcloud-auth-plugin
 
+    - name: Check if GKE Cluster Exists
+      id: check-cluster
+      run: |
+        if gcloud container clusters describe cluster-amazon-data --zone europe-west4-a; then
+          echo "Cluster already exists" > cluster_exists.txt
+        else
+          echo "Cluster does not exist" > cluster_exists.txt
+        fi
+
     - name: Create GKE Cluster
+      if: steps.check-cluster.outputs.cluster_exists == 'Cluster does not exist'
       run: |
         gcloud container clusters create cluster-amazon-data \
           --zone=europe-west4-a \
@@ -46,6 +56,10 @@ jobs:
           --scopes=service-control,service-management,compute-rw,storage-ro,cloud-platform,logging-write,monitoring-write
         gcloud container clusters get-credentials cluster-amazon-data --zone europe-west4-a
         kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud config get-value core/account)
+
+    - name: Get Credentials for Existing Cluster
+      if: steps.check-cluster.outputs.cluster_exists == 'Cluster already exists'
+      run: gcloud container clusters get-credentials cluster-amazon-data --zone europe-west4-a
 
   deploy:
     runs-on: ubuntu-latest
