@@ -72,7 +72,7 @@ jobs:
 
     - name: Create ClusterRoleBinding
       run: |
-        kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=$USER_ACCOUNT
+        kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=${{ secrets.GCP_SA_EMAIL }}
 
     - name: Get Credentials for Existing Cluster
       if: env.exists == 'true'
