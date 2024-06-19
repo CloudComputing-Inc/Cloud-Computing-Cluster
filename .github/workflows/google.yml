@@ -25,7 +25,7 @@ jobs:
 
     - name: Enable GCP Services
       run: gcloud services enable container
-    
+
     - name: Install gke-gcloud-auth-plugin
       run: |
         sudo apt-get update
@@ -55,7 +55,16 @@ jobs:
           --enable-autorepair \
           --scopes=service-control,service-management,compute-rw,storage-ro,cloud-platform,logging-write,monitoring-write
         gcloud container clusters get-credentials cluster-amazon-data --zone europe-west4-a
-        kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud config get-value core/account)
+
+    - name: Get User Account
+      id: get-user
+      run: |
+        gcloud config get-value core/account 
+        echo "USER_ACCOUNT=$(gcloud config get-value core/account)" >> $GITHUB_ENV
+
+    - name: Create ClusterRoleBinding
+      run: |
+        kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=$USER_ACCOUNT
 
     - name: Get Credentials for Existing Cluster
       if: env.exists == 'true'
