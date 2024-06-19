@@ -60,20 +60,12 @@ jobs:
       id: get-user
       run: |
         USER_ACCOUNT=$(gcloud config get-value core/account)
-        if [ "$USER_ACCOUNT" = "***" ]; then
+        if [ -z "$USER_ACCOUNT" ]; then
           SERVICE_ACCOUNT_EMAIL=${{ secrets.GCP_SA_EMAIL }}
           USER_ACCOUNT="$SERVICE_ACCOUNT_EMAIL"
         fi
         echo "USER_ACCOUNT=$USER_ACCOUNT" >> $GITHUB_ENV
         echo "Current authenticated account: $USER_ACCOUNT"
-
-    - name: Debug User Account
-      run: echo "User account is $USER_ACCOUNT"
-
-    - name: Create ClusterRoleBinding
-      run: |
-        kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=${{ secrets.GCP_SA_EMAIL }}
-
     - name: Get Credentials for Existing Cluster
       if: env.exists == 'true'
       run: gcloud container clusters get-credentials cluster-amazon-data --zone europe-west4-a
