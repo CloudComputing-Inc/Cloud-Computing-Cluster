@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package database;
+
+service DatabaseService {
+  rpc ListStates (Empty) returns (StateList);
+  rpc ListCities (Empty) returns (CityList);
+  rpc ListBusinessIds (Pagination) returns (BusinessIdList);
+  rpc GetBusiness (BusinessId) returns (Business);
+  rpc GetTopRatedBusinesses (TopRatedRequest) returns (BusinessList);
+}
+
+message Empty {}
+
+message Pagination {
+  int32 page = 1;
+  int32 limit = 2;
+}
+
+message BusinessId {
+  string business_id = 1;
+}
+
+message TopRatedRequest {
+  string city = 1;
+  string state = 2;
+  int32 limit = 3;
+}
+
+message StateList {
+  repeated string states = 1;
+}
+
+message CityList {
+  repeated string cities = 1;
+}
+
+message BusinessIdList {
+  repeated BusinessIdInfo business_ids = 1;
+}
+
+message BusinessIdInfo {
+  string name = 1;
+  string id = 2;
+}
+
+message BusinessList {
+  repeated Business businesses = 1;
+}
+
+message Business {
+  string business_id = 1;
+  string name = 2;
+  string address = 3;
+  string city = 4;
+  string state = 5;
+  string postal_code = 6;
+  float latitude = 7;
+  float longitude = 8;
+  float stars = 9;
+  int32 review_count = 10;
+  int32 is_open = 11;
+}
