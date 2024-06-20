@@ -85,6 +85,8 @@ jobs:
         docker build -t api_gateway ./api
         docker tag api_gateway gcr.io/cloudcomputinginc/api_gateway:latest
 
+        docker build -t sentiment_analysis ./app/microservices/sentiment-analysis
+        docker tag sentiment_analysis gcr.io/cloudcomputing/sentiment_analysis:latest
 
         gcloud auth configure-docker
         docker push gcr.io/cloudcomputinginc/yelp_reviews:latest
@@ -92,6 +94,8 @@ jobs:
 
         docker push gcr.io/cloudcomputinginc/question_analysis:latest
         docker push gcr.io/cloudcomputinginc/api_gateway:latest
+
+        docker push gcr.io/cloudcomputiginc/sentiment_analysis:latest
 
     - name: Configure Firewall and Apply Kubernetes Configs
       run: |
