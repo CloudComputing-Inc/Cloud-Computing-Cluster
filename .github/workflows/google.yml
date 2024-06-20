@@ -73,23 +73,25 @@ jobs:
     - name: Build and Push Docker Images
       run: |
         export PROJECT_ID=$(gcloud info --format='value(config.project)')
-        chmod +x ./scripts/proto_requirements.sh
-        ./scripts/proto_requirements.sh
+        docker build -t yelp_reviews ./app/microservices/yelp-reviews
+        docker tag yelp_reviews gcr.io/cloudcomputinginc/yelp_reviews:latest
 
-        chmod +x ./scripts/proto_create.sh
-        ./scripts/proto_create.sh
+        docker build -t market_analysis ./app/microservices/market-analysis
+        docker tag market_analysis gcr.io/cloudcomputinginc/market_analysis:latest
 
-        cd api/
-        docker build -t gcr.io/${PROJECT_ID}/api-gateway .
-        cd ../app/microservices/market-performance
-        docker build -t gcr.io/${PROJECT_ID}/market-performance .
+        docker build -t question_analysis ./app/microservices/question-analysis
+        docker tag question_analysis gcr.io/cloudcomputinginc/question_analysis:latest
 
-        docker images
-        gcloud services enable containerregistry.googleapis.com
+        docker build -t api_gateway ./api
+        docker tag api_gateway gcr.io/cloudcomputinginc/api_gateway:latest
+
+
         gcloud auth configure-docker
+        docker push gcr.io/cloudcomputinginc/yelp_reviews:latest
+        docker push gcr.io/cloudcomputinginc/market_analysis:latest
 
-        docker push gcr.io/${PROJECT_ID}/api-gateway
-        docker push gcr.io/${PROJECT_ID}/market-performance
+        docker push gcr.io/cloudcomputinginc/question_analysis:latest
+        docker push gcr.io/cloudcomputinginc/api_gateway:latest
 
     - name: Configure Firewall and Apply Kubernetes Configs
       run: |
