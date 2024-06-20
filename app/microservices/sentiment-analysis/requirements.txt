@@ -1,7 +1,7 @@
-grpcio==1.38.1
+grpcio
 google-cloud-bigquery
-Flask==2.1.1
-Flask-SQLAlchemy==2.5.1
-flask-swagger-ui==3.36.0
-requests==2.26.0
-SQLAlchemy==1.4.22
+Flask
+Flask-SQLAlchemy
+flask-swagger-ui
+requests
+SQLAlchemy
