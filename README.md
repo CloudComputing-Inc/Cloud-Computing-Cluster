@@ -56,9 +56,6 @@ In case of permission denied, run:
 
 
 
-
-
-
 # Roles
 #Role | Role                                                  | Number  | Name            
  :--: |:----------------------------------------------------- | :------ |:---------------
@@ -74,40 +71,3 @@ In case of permission denied, run:
  | Sentiment Analysis                                    | fc60566 | Christopher Anaya   
  | Yelp Category Recommendation                          | fc62761 | José Ricardo Ribeiro 
  | Question-Analysis                                     | fc63327 | Ayla Stehling
-
-<!-- 
-# Running (internal communication)
-## Market Performance Service with GRPC example:
-### Server:
-$ pip install --upgrade pip
-
-$ python -m venv venv
-
-$ source venv/bin/activate
-
-(venv) $ cd ~/cn-group03/app/microservices/market-performance
-
-
-(venv) $ python -m pip install -r requirements.txt
-
-$ python market-performance.py
-
-
-### Client:
-$ cd ~/cn-group03/app/microservices/market-performance
-
-$ python
-
->>> import grpc
-
->>> from market_performance_pb2 import GetMainCategoriesRequest
-
->>> import market_performance_pb2_grpc
-
->>> channel= grpc.insecure_channel('localhost:50051')
-
->>> client=market_performance_pb2_grpc.MarketPerformanceServiceStub(channel)
-
->>> request= GetMainCategoriesRequest()
-
->>> client.GetMainCategories(request) -->
