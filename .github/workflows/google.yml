@@ -24,7 +24,7 @@ jobs:
         credentials_json: ${{ secrets.GCP_SA_KEY }}
 
     - name: Enable GCP Services
-      run: gcloud services enable container.googleapis.com cloudapis.googleapis.com containerregistry.googleapis.com
+      run: gcloud services enable container
 
     - name: Install gke-gcloud-auth-plugin
       run: |
@@ -66,25 +66,82 @@ jobs:
         fi
         echo "USER_ACCOUNT=$USER_ACCOUNT" >> $GITHUB_ENV
         echo "Current authenticated account: $USER_ACCOUNT"
-
     - name: Get Credentials for Existing Cluster
       if: env.exists == 'true'
       run: gcloud container clusters get-credentials cluster-amazon-data --zone europe-west4-a
 
-    - name: Configure GCP
-      run: |
-        chmod +x ./scripts/gcp_configure.sh
-        ./scripts/gcp_configure.sh
-
     - name: Build and Push Docker Images
       run: |
-        chmod +x ./scripts/gcr_publish.sh
-        ./scripts/gcr_publish.sh
+        export PROJECT_ID=$(gcloud info --format='value(config.project)')
+        chmod +x ./scripts/proto_requirements.sh
+        ./scripts/proto_requirements.sh
 
-    - name: Apply Deployment Configurations
+        cd api/
+        docker build -t gcr.io/${PROJECT_ID}/api_gateway:latest .
+        cd -
+
+        cd app/microservices/yelp-reviews/
+        docker build -t gcr.io/${PROJECT_ID}/yelp_reviews:latest .
+        cd -
+
+        cd app/microservices/market-analysis/
+        docker build -t gcr.io/${PROJECT_ID}/market_analysis:latest .
+        cd -
+
+        cd app/microservices/question-analysis/
+        docker build -t gcr.io/${PROJECT_ID}/question_analysis:latest .
+        cd -
+
+        # Push Docker images to Google Container Registry
+        docker push gcr.io/${PROJECT_ID}/api_gateway:latest
+        docker push gcr.io/${PROJECT_ID}/yelp_reviews:latest
+        docker push gcr.io/${PROJECT_ID}/market_analysis:latest
+        docker push gcr.io/${PROJECT_ID}/question_analysis:latest
+
+    - name: Configure Firewall and Apply Kubernetes Configs
       run: |
-        chmod +x ./scripts/gcr_apply_kubernetes.sh
-        ./scripts/gcr_apply_kubernetes.sh
+        CLUSTER_NAME=$(gcloud container clusters list --format="value(name)" --filter="zone:(europe-west4-a)")
+        TAG_NAME=$(gcloud compute instances list --filter="name~'^gke-$CLUSTER_NAME'" --format="value(tags.items[0])" --limit=1)
+        NETWORK_NAME=$(gcloud container clusters describe $CLUSTER_NAME --zone europe-west4-a --format="value(network)")
+        FIREWALL_RULE_NAME="allow-nodeport-access"
+
+        if ! gcloud compute firewall-rules describe $FIREWALL_RULE_NAME &>/dev/null; then
+          gcloud compute firewall-rules create $FIREWALL_RULE_NAME \
+            --direction=INGRESS \
+            --priority=1000 \
+            --network=$NETWORK_NAME \
+            --action=ALLOW \
+            --rules=tcp:30000 \
+            --source-ranges=0.0.0.0/0 \
+            --target-tags=$TAG_NAME
+        fi
+
+        for file in kubernetes/*/*.yaml; do kubectl apply -f "$file"; done
+        for file in prometheus/*.yaml; do kubectl apply -f "$file"; done
+        kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+        kubectl rollout status deployment/prometheus-deployment
+        kubectl rollout status deployment/pushgateway
+
+        kubectl create configmap locust-scripts --from-file=kubernetes/locust/locust_marketAnalysis.py || kubectl create configmap locust-scripts --from-file=kubernetes/locust/locust_marketAnalysis.py --dry-run=client -o yaml | kubectl apply -f -
+        kubectl get configmap locust-scripts
+
+        EXTERNAL_IP=""
+        while [ -z "$EXTERNAL_IP" ]; do
+          echo "Waiting for external IP of nginx-gateway-svc..."
+          EXTERNAL_IP=$(kubectl get svc nginx-gateway-svc -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          [ -z "$EXTERNAL_IP" ] && sleep 10
+        done
+
+        echo "External IP found: $EXTERNAL_IP"
+        LOCUST_DEPLOYMENT_YAML=kubernetes/locust/locust-deployment.yaml
+        sed -i "s|--host=http://PLACEHOLDER|--host=http://$EXTERNAL_IP|g" $LOCUST_DEPLOYMENT_YAML
+        kubectl apply -f $LOCUST_DEPLOYMENT_YAML
+    - name: Install Python Dependencies
+      run: |
+        cd ~/cn-group03/testing
+        pip install -r requirements.txt
+        pip install bandit
 
     - name: Run Tests
       run: |
