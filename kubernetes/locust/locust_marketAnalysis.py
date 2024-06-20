@@ -28,7 +28,7 @@ class YelpTasks(TaskSet):
 
     @task(2)
     def get_business(self):
-        self.client.get("/yelp/businesses/sample_business_id")
+        self.client.get("/yelp/businesses?page=2&limit=50")
 
     @task(1)
     def list_cities(self):
