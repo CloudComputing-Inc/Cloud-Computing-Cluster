@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = "http://35.204.117.9"
+BASE_URL = "http://34.34.124.22"
 
 def test_get_categories():
     response = requests.get(f"{BASE_URL}/market/categories")
@@ -35,27 +35,21 @@ def test_get_metadata_invalid_price():
 
 def test_get_top_brand_missing_category():
     response = requests.get(f"{BASE_URL}/market/top-brand")
-    assert response.status_code == 500
-    #assert response.json().get("error") == "Category not handled by any cluster"
+    assert response.status_code == 400
+    
 
 def test_get_top_brand_invalid_category():
     response = requests.get(f"{BASE_URL}/market/top-brand?category=InvalidCategory")
-    assert response.status_code == 500
-    #assert response.json().get("error") == "Category not handled by any cluster"
+    assert response.status_code == 404
+    
 
 def test_get_top_products_missing_category():
     response = requests.get(f"{BASE_URL}/market/top-products")
-    assert response.status_code == 500
-    #assert response.json().get("error") == "Category not handled by any cluster"
+    assert response.status_code == 400
+    
 
 def test_get_top_products_invalid_category():
     response = requests.get(f"{BASE_URL}/market/top-products?category=InvalidCategory")
-    assert response.status_code == 500
-    #assert response.json().get("error") == "Category not handled by any cluster"
-
-# def test_metrics_endpoint():
-#     response = requests.get(f"{BASE_URL}/metrics")
-#     assert response.status_code == 200
-#     assert "cpu_usage" in response.text
-#     assert "memory_usage" in response.text
+    assert response.status_code == 404
+    
 
