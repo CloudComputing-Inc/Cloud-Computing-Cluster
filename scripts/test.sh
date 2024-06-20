@@ -23,11 +23,6 @@ echo "Updated $TEST_FILE with BASE_URL: http://$EXTERNAL_IP"
 pytest $TEST_FILE
 
 
-
-### Acceptance Tests
-
-
-
 ### Security Tests
 #!/bin/bash
 
@@ -51,7 +46,3 @@ else
 fi
 
 
-
-
-
-### Reliability
