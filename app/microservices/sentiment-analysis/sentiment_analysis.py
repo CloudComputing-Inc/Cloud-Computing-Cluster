@@ -13,8 +13,10 @@ from urllib.parse import quote
 from sqlalchemy.engine import reflection
 
 project_id = 'cloudcomputinginc'
+
 dataset = 'electronics'
 table = 'data'
+
 table_id = f"{project_id}.{dataset}.{table}"  # Update with your BigQuery table ID
 
 app = Flask(__name__)

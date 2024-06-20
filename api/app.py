@@ -3,7 +3,7 @@ from functools import wraps
 import connexion
 from flask_cors import CORS
 from flask import jsonify, request
-from prometheus_client import start_http_server, Summary, Counter, generate_latest
+from prometheus_client import start_http_server, Summary, Counter, generate_latest, CollectorRegistry, Gauge, push_to_gateway
 from prometheus_client.core import CollectorRegistry
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
@@ -112,7 +112,31 @@ def get_top_brand():
     return jsonify(response)
     
 
+# Define a route to expose metrics
+@app.app.route('/metrics')
+def metrics():
+    return generate_latest()
+
+# Middleware to measure request processing time and count
+@app.app.before_request
+def before_request():
+    request.start_time = time.time()
+    REQUEST_COUNT.inc()
+
+@app.app.after_request
+def after_request(response):
+    request_latency = time.time() - request.start_time
+    REQUEST_TIME.observe(request_latency)
+
+    # Push metrics to Pushgateway
+    registry = CollectorRegistry()
+    g = Gauge('request_latency_seconds', 'Description of gauge', registry=registry)
+    g.set(request_latency)
+    push_to_gateway('pushgateway:9091', job='request_latency', registry=registry)
+
+    return response
+
 if __name__ == "__main__":
-        # Start up the server to expose the metrics.
+    # Start up the server to expose the metrics.
     start_http_server(9090)
     app.run(host='0.0.0.0', port=8000)
