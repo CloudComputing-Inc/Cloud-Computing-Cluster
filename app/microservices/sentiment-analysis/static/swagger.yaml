@@ -1,0 +1,134 @@
+openapi: 3.0.0
+info:
+  description: This is an API to perform CRUD operations on a BigQuery database.
+  version: 1.0.0
+  title: BigQuery CRUD API
+servers:
+  - url: http://localhost:8080/api/v1
+paths:
+  /items:
+    get:
+      summary: Get all items
+      description: Retrieve a list of all items from the BigQuery database.
+      responses:
+        '200':
+          description: A list of items.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+    post:
+      summary: Create a new item
+      description: Add a new item to the BigQuery database.
+      requestBody:
+        description: Item object that needs to be added to the database
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '201':
+          description: Item created
+  /items/{itemId}:
+    get:
+      summary: Get item by ID
+      description: Retrieve a single item by its ID from the BigQuery database.
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the item to return
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: Item not found
+    put:
+      summary: Update an existing item
+      description: Update an existing item in the BigQuery database.
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the item to update
+      requestBody:
+        description: Item object that needs to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '200':
+          description: Item updated
+        '404':
+          description: Item not found
+    delete:
+      summary: Delete item by ID
+      description: Delete a single item by its ID from the BigQuery database.
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the item to delete
+      responses:
+        '204':
+          description: Item deleted
+        '404':
+          description: Item not found
+components:
+  schemas:
+    Item:
+      type: object
+      required:
+        - verified_purchase
+        - timestamp
+        - helpful_vote
+        - user_id
+        - asin
+        - parent_asin
+        - rating
+        - text
+        - title
+      properties:
+        verified_purchase:
+          type: boolean
+          example: true
+        timestamp:
+          type: integer
+          example: 1627817765
+        helpful_vote:
+          type: integer
+          example: 10
+        user_id:
+          type: string
+          example: A1B2C3D4E5
+        asin:
+          type: string
+          example: B000123456
+        parent_asin:
+          type: string
+          example: B000654321
+        rating:
+          type: number
+          format: float
+          example: 4.5
+        text:
+          type: string
+          example: This is a review text.
+        title:
+          type: string
+          example: Review Title
