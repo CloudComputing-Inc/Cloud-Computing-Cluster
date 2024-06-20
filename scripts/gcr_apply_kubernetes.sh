@@ -1,9 +1,14 @@
 # Applies Kubernetes configurations for microservices
 for file in kubernetes/*/*.yaml; do kubectl apply -f "$file"; done
 
-# Applies Prometheus configurations
-for file in prometheus/*.yaml; do kubectl apply -f "$file"; done
+# Apply Prometheus configurations
+PROMETHEUS_DIR=~/cn-group03/prometheus
 
+kubectl apply -f $PROMETHEUS_DIR/prometheus-config.yaml
+kubectl apply -f $PROMETHEUS_DIR/prometheus-deployment.yaml
+kubectl apply -f $PROMETHEUS_DIR/prometheus-service.yaml
+kubectl apply -f $PROMETHEUS_DIR/pushgateway.yaml
+kubectl apply -f $PROMETHEUS_DIR/grafana.yaml
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
 # Ensure Prometheus and Pushgateway services are running
