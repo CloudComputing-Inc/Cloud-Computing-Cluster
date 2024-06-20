@@ -23,10 +23,10 @@ spec:
         ports:
         - containerPort: 3000
         env:
-        - name: GF_SECURITY_CSRF_ADDITIONAL_HEADERS
-          value: ""
-        - name: GF_SECURITY_CSRF_TRUSTED_ORIGINS
-          value: "3001-cs-1027697533973-default.cs-europe-west1-onse.cloudshell.dev"
+        - name: GF_SECURITY_ADMIN_USER
+          value: "cloudcomp03"
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: "cloudcomp03"
 ---
 kind: Service
 apiVersion: v1
