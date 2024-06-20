@@ -1,4 +1,8 @@
-grpcio-tools >= 1.30
-grpcio-reflection
-google-cloud >= 0.34
-concurrent
+grpcio==1.38.1
+google-cloud-bigquery==2.25.0
+Flask==2.1.1
+Flask-SQLAlchemy==2.5.1
+flask-swagger-ui==3.36.0
+requests==2.26.0
+PyYAML==5.4.1
+SQLAlchemy==1.4.22
