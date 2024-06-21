@@ -20,23 +20,11 @@ spec:
       containers:
       - name: grafana
         image: grafana/grafana
-        ports:
-        - containerPort: 3000
         env:
-        - name: GF_AUTH_ANONYMOUS_ENABLED
-          value: "true"
-        - name: GF_AUTH_ANONYMOUS_ORG_ROLE
-          value: "Admin"
         - name: GF_SECURITY_CSRF_ADDITIONAL_HEADERS
           value: ""
         - name: GF_SECURITY_CSRF_TRUSTED_ORIGINS
-          value: "9090-cs-1027697533973-default.cs-europe-west1-xedi.cloudshell.dev"
-        - name: GF_SERVER_DOMAIN
           value: "3001-cs-1027697533973-default.cs-europe-west1-xedi.cloudshell.dev"
-        - name: GF_SERVER_ROOT_URL
-          value: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
-        - name: GF_SERVER_SERVE_FROM_SUB_PATH
-          value: "true"
 ---
 kind: Service
 apiVersion: v1
