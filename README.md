@@ -61,7 +61,7 @@ In case of permission denied, run:
  :--: |:----------------------------------------------------- | :------ |:---------------
 1     | Microservices                                         | fc55313 | Beatriz Rosa     
 2     | Data Science                                          | fc60566 | Christopher Anaya   
-3     | TODO                                                  | fc62761 | José Ricardo Ribeiro 
+3     | DevOps                                                  | fc62761 | José Ricardo Ribeiro 
 4     | TODO                                                  | fc63327 | Ayla Stehling
 
 ## Microservices
