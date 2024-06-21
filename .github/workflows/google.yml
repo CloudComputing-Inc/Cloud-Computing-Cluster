@@ -142,3 +142,20 @@ jobs:
         LOCUST_DEPLOYMENT_YAML=kubernetes/locust/locust-deployment.yaml
         sed -i "s|--host=http://PLACEHOLDER|--host=http://$EXTERNAL_IP|g" $LOCUST_DEPLOYMENT_YAML
         kubectl apply -f $LOCUST_DEPLOYMENT_YAML
+    # Deploy the Docker image to the GKE cluster
+    - name: Deploy
+      run: |
+        kubectl rollout status deployment/yelp-reviews-deployment
+        kubectl rollout status deployment/market-analysis-deployment
+        kubectl rollout status deployment/question-analysis-deployment
+        kubectl rollout status deployment/api-gateway-deployment
+        kubectl rollout status deployment/sentiment-analysis-deployment
+        kubectl rollout status deployment/locust
+        EXTERNAL_IP=""
+        while [ -z "$EXTERNAL_IP" ]; do
+          echo "Waiting for external IP of nginx-gateway-svc..."
+          EXTERNAL_IP=$(kubectl get svc nginx-gateway-svc -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          [ -z "$EXTERNAL_IP" ] && sleep 10
+        done
+
+        echo "External IP found: $EXTERNAL_IP"
