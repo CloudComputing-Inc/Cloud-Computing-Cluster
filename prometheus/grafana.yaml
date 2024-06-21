@@ -26,7 +26,7 @@ spec:
         - name: GF_SECURITY_CSRF_ADDITIONAL_HEADERS
           value: ""
         - name: GF_SECURITY_CSRF_TRUSTED_ORIGINS
-          value: "3001-cs-1027697533973-default.cs-europe-west1-xedi.cloudshell.dev"
+          value: "8080-cs-1027697533973-default.cs-europe-west1-xedi.cloudshell.dev"
 ---
 kind: Service
 apiVersion: v1
