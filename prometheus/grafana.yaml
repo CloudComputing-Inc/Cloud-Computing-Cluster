@@ -27,6 +27,18 @@ spec:
           value: "cloudcomp03"
         - name: GF_SECURITY_ADMIN_PASSWORD
           value: "cloudcomp03"
+        - name: GF_SERVER_ROOT_URL
+          value: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
+        - name: GF_SERVER_SERVE_FROM_SUB_PATH
+          value: "true"
+        - name: GF_SECURITY_ALLOW_EMBEDDING
+          value: "true"
+        - name: GF_SECURITY_COOKIE_SAMESITE
+          value: "none"
+        - name: GF_SERVER_ENABLE_GZIP
+          value: "true"
+        - name: GF_SECURITY_CORS_ALLOW_ORIGIN
+          value: "*"
 ---
 kind: Service
 apiVersion: v1
