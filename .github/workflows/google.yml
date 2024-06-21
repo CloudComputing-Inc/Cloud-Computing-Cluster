@@ -160,7 +160,6 @@ jobs:
         repo: ${{ github.event.repository.name }}
         ref: ${{ github.sha }}
         environment: production
-        required_contexts: []
 
     # Deploy the Docker image to the GKE cluster and update GitHub Deployment status
     - name: Deploy
