@@ -1,4 +1,5 @@
 # Cloud Computing Project Group 03
+[![GKE Deploy](https://github.com/CloudComputing-Inc/cn-group03/actions/workflows/google.yml/badge.svg)](https://github.com/CloudComputing-Inc/cn-group03/actions/workflows/google.yml)
 ## Members: 
 - Beatriz Rosa 55313, José Ricardo Ribeiro 62761, Christopher Anaya 60566, Ayla Stehling 63327
 
@@ -61,7 +62,7 @@ In case of permission denied, run:
  :--: |:----------------------------------------------------- | :------ |:---------------
 1     | Microservices                                         | fc55313 | Beatriz Rosa     
 2     | Data Science                                          | fc60566 | Christopher Anaya   
-3     | TODO                                                  | fc62761 | José Ricardo Ribeiro 
+3     | DevOps                                                  | fc62761 | José Ricardo Ribeiro 
 4     | TODO                                                  | fc63327 | Ayla Stehling
 
 ## Microservices

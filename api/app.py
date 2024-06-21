@@ -77,13 +77,13 @@ CORS(app.app)
 @app.app.route('/')
 def welcome():
     response = {
-        "Welcome": "Welcome to the Amazon Reviews Analyzer API!",
+        "Welcome": "Welcome to the Reviews Analyzer API!",
         "Note": "Please refer to the Swagger UI for more detailed information on each endpoint.",
         "Endpoints": {
-            "/api/v1/categories": "Retrieve a list of product categories. No additional fields required.",
-            "/api/v1/metadata?category={category}&brand={brand}&minPrice={minPrice}&maxPrice={maxPrice}": "Fetch metadata for products with optional filtering. Replace {category} with the product category (required), {brand} with the product brand (optional), {minPrice} with the minimum price (optional), {maxPrice} with the maximum price (optional).",
-            "/api/v1/top-brand?category={category}": "Get the top brand in a specified category. Replace {category} with the product category (required).",
-            "/api/v1/top-products?category={category}": "Retrieve top products in a category. Replace {category} with the product category (required)."
+            "/market/categories": "Retrieve a list of product categories. No additional fields required.",
+            "/market/metadata?category={category}&brand={brand}&minPrice={minPrice}&maxPrice={maxPrice}": "Fetch metadata for products with optional filtering. Replace {category} with the product category (required), {brand} with the product brand (optional), {minPrice} with the minimum price (optional), {maxPrice} with the maximum price (optional).",
+            "/market/top-brand?category={category}": "Get the top brand in a specified category. Replace {category} with the product category (required).",
+            "/market/top-products?category={category}": "Retrieve top products in a category. Replace {category} with the product category (required)."
         }
     }
     return jsonify(response)
