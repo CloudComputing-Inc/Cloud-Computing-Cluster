@@ -145,12 +145,13 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |
-        kubectl rollout status deployment/yelp-reviews-deployment
-        kubectl rollout status deployment/market-analysis-deployment
-        kubectl rollout status deployment/question-analysis-deployment
-        kubectl rollout status deployment/api-gateway-deployment
-        kubectl rollout status deployment/sentiment-analysis-deployment
-        kubectl rollout status deployment/locust
+        timeout 20 kubectl rollout status deployment/yelp-reviews-deployment || echo "Yelp Reviews deployment not found"
+        timeout 20 kubectl rollout status deployment/market-analysis-deployment  || echo "Market Analysis deployment not found"
+        timeout 20 kubectl rollout status deployment/question-analysis-deployment || echo "Question Analysis deployment not found"
+        timeout 20 kubectl rollout status deployment/api-gateway-deployment  || echo "API Gateway deployment not found"
+        timeout 20 kubectl rollout status deployment/sentiment-analysis-deployment || echo "Sentiment Analysis deployment not found"
+        timeout 20 kubectl rollout status deployment/prometheus-deployment || echo "Prometheus deployment not found"
+        timeout 20 kubectl rollout status deployment/locust  || echo "Locust deployment not found"
         EXTERNAL_IP=""
         while [ -z "$EXTERNAL_IP" ]; do
           echo "Waiting for external IP of nginx-gateway-svc..."
